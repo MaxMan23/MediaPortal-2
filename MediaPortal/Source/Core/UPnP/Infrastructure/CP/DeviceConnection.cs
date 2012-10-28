@@ -97,9 +97,11 @@ namespace UPnP.Infrastructure.CP
       {
         try
         {
-          StreamWriter sw = new StreamWriter(_httpWebRequest.GetRequestStream(), UPnPConsts.UTF8_NO_BOM);
-          sw.Write(message);
-          sw.Close();
+          using (StreamWriter sw = new StreamWriter(_httpWebRequest.GetRequestStream(), UPnPConsts.UTF8_NO_BOM, UPnPConsts.STREAM_WRITER_BUFFER_SIZE))
+          {
+            sw.Write(message);
+            sw.Close();
+          }
         }
         catch (Exception e)
         {

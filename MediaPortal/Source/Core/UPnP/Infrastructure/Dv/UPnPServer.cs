@@ -384,11 +384,13 @@ namespace UPnP.Infrastructure.Dv
                 status = HttpStatusCode.InternalServerError;
               }
               response.Status = status;
-              StreamWriter s = new StreamWriter(response.Body, encoding);
-              s.Write(result);
-              s.Flush();
-              SafeSendResponse(response);
-              s.Close();
+              using (StreamWriter s = new StreamWriter(response.Body, encoding, UPnPConsts.STREAM_WRITER_BUFFER_SIZE))
+              {
+                s.Write(result);
+                s.Flush();
+                SafeSendResponse(response);
+                s.Close();
+              }
               return;
             }
           }

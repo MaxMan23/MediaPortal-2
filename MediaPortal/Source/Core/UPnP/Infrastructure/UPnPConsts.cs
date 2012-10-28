@@ -236,5 +236,10 @@ namespace UPnP.Infrastructure
     #endregion
 
     public static Encoding UTF8_NO_BOM = new UTF8Encoding(false);
+
+    /// <summary>
+    /// Buffersize for StreamWriter when setting request message.
+    /// </summary>
+    public const int STREAM_WRITER_BUFFER_SIZE = 128 * 1024;
   }
 }
