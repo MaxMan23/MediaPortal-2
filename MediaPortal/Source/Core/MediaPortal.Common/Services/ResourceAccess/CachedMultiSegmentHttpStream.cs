@@ -187,7 +187,6 @@ namespace MediaPortal.Common.Services.ResourceAccess
               }
               else if (_cacheStream != null) // If disposed, the stream is null
                 Load_Async();
-              return;
             }
           }
           finally
@@ -362,8 +361,6 @@ namespace MediaPortal.Common.Services.ResourceAccess
           break;
         case SeekOrigin.End:
           newPos = _length + offset;
-          break;
-        default:
           break;
       }
       if (newPos < 0 || newPos > _length)

@@ -261,14 +261,12 @@ namespace MediaPortal.Common.MediaManagement.MLQueries
     protected static XmlSerializer GetOrCreateXMLSerializer()
     {
       return _xmlSerializer ??
-          (_xmlSerializer = new XmlSerializer(typeof(MediaItemQuery), new Type[] {typeof(FilterWrapper)}));
+          (_xmlSerializer = new XmlSerializer(typeof(MediaItemQuery), new[] {typeof(FilterWrapper)}));
     }
 
     protected static XmlSerializer GetOrCreateXMLFilterSerializer()
     {
-      if (_xmlFilterSerializer == null)
-        _xmlFilterSerializer = new XmlSerializer(typeof(FilterWrapper));
-      return _xmlFilterSerializer;
+      return _xmlFilterSerializer ?? (_xmlFilterSerializer = new XmlSerializer(typeof (FilterWrapper)));
     }
 
     /// <summary>

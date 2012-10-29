@@ -190,9 +190,9 @@ namespace MediaPortal.Common.Services.Logging
         return string.Empty;
       string[] subKeys = mainKey.GetSubKeyNames();
       string cpuInfos = string.Empty;
-      for (int i = 0; i < subKeys.Length; i++)
+      foreach (string t in subKeys)
       {
-        RegistryKey key = mainKey.OpenSubKey(subKeys[i]);
+        RegistryKey key = mainKey.OpenSubKey(t);
         if (key == null)
           continue;
         string cpuType = (string) key.GetValue("ProcessorNameString", "<unknown>");

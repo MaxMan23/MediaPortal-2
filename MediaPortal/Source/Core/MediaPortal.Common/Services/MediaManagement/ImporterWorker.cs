@@ -605,7 +605,6 @@ namespace MediaPortal.Common.Services.MediaManagement
               importJob.State = ImportJobState.Finished;
           ServiceRegistration.Get<ILogger>().Info("ImporterWorker: Finished import job '{0}'", importJob);
           ImporterWorkerMessaging.SendImportMessage(ImporterWorkerMessaging.MessageType.ImportCompleted, importJob.BasePath);
-          return;
         }
         catch (Exception e)
         {
@@ -618,12 +617,10 @@ namespace MediaPortal.Common.Services.MediaManagement
       catch (ImportSuspendedException)
       {
         ServiceRegistration.Get<ILogger>().Info("ImporterWorker: Suspending import job '{0}' ({1} items pending - will be continued next time)", importJob, importJob.PendingResources.Count);
-        return;
       }
       catch (ImportAbortException)
       {
         ServiceRegistration.Get<ILogger>().Info("ImporterWorker: Aborting import job '{0}' ({1} items pending)", importJob, importJob.PendingResources.Count);
-        return;
       }
     }
     #region IImporterWorker implementation

@@ -58,7 +58,7 @@ namespace MediaPortal.Common.Services.FileEventNotification
     /// <summary>
     /// Time to wait between different checks for events, in milliseconds.
     /// </summary>
-    private const int EventsConsolidationInterval = 1000;
+    private const int EVENTS_CONSOLIDATION_INTERVAL = 1000;
 
     #endregion
 
@@ -307,7 +307,7 @@ namespace MediaPortal.Common.Services.FileEventNotification
         _watcher.IncludeSubdirectories = true;
         _watcher.EnableRaisingEvents = true;
         _watching = true;
-        _notifyTimer = new SystemTimer(EventsConsolidationInterval);
+        _notifyTimer = new SystemTimer(EVENTS_CONSOLIDATION_INTERVAL);
         _notifyTimer.Elapsed += NotifyTimer_Elapsed;
         _notifyTimer.Enabled = true;
       }
@@ -338,8 +338,7 @@ namespace MediaPortal.Common.Services.FileEventNotification
     /// <returns></returns>
     private FileSystemWatcher InitializeFileSystemWatcher(string path)
     {
-      var watcher = new FileSystemWatcher(path);
-      watcher.IncludeSubdirectories = true;
+      var watcher = new FileSystemWatcher(path) {IncludeSubdirectories = true};
       watcher.Changed += FileSystemEventHandler;
       watcher.Created += FileSystemEventHandler;
       watcher.Deleted += FileSystemEventHandler;
@@ -356,9 +355,9 @@ namespace MediaPortal.Common.Services.FileEventNotification
     /// <param name="path"></param>
     private void RaiseSingleEvent(string path, FileWatchChangeType changeType)
     {
-      var _report = new Queue<FileWatchEvent>(1);
-      _report.Enqueue(new FileWatchEvent(changeType, path));
-      RaiseEvents(_report);
+      var report = new Queue<FileWatchEvent>(1);
+      report.Enqueue(new FileWatchEvent(changeType, path));
+      RaiseEvents(report);
     }
 
     /// <summary>
