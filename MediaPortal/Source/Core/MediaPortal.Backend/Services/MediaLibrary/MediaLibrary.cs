@@ -169,7 +169,7 @@ namespace MediaPortal.Backend.Services.MediaLibrary
       _importResultHandler = new ImportResultHandler(this);
       _messageQueue = new AsynchronousMessageQueue(this, new string[]
         {
-            ImporterWorkerMessaging.CHANNEL,
+            ImporterWorkerMessaging.CHANNEL
         });
       _messageQueue.MessageReceived += OnMessageReceived;
     }
@@ -868,7 +868,7 @@ namespace MediaPortal.Backend.Services.MediaLibrary
       IClientManager clientManager = ServiceRegistration.Get<IClientManager>();
       lock (clientManager.SyncObj)
       {
-        ClientConnection client = clientManager.ConnectedClients.Where(c => c.Descriptor.MPFrontendServerUUID == share.SystemId).FirstOrDefault();
+        ClientConnection client = clientManager.ConnectedClients.FirstOrDefault(c => c.Descriptor.MPFrontendServerUUID == share.SystemId);
         if (client == null)
           return;
         object value;
@@ -891,7 +891,7 @@ namespace MediaPortal.Backend.Services.MediaLibrary
       IClientManager clientManager = ServiceRegistration.Get<IClientManager>();
       lock (clientManager.SyncObj)
       {
-        ClientConnection client = clientManager.ConnectedClients.Where(c => c.Descriptor.MPFrontendServerUUID == share.SystemId).FirstOrDefault();
+        ClientConnection client = clientManager.ConnectedClients.FirstOrDefault(c => c.Descriptor.MPFrontendServerUUID == share.SystemId);
         if (client == null)
           return;
         object value;
