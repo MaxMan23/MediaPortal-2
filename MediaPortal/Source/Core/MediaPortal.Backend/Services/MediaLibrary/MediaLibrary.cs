@@ -815,7 +815,6 @@ namespace MediaPortal.Backend.Services.MediaLibrary
       ITransaction transaction = database.BeginTransaction();
       try
       {
-        bool result = false;
         foreach (MediaItemAspect mia in mediaItemAspects)
         {
           if (!_miaManagement.ManagedMediaItemAspectTypes.ContainsKey(mia.Metadata.AspectId))
