@@ -83,7 +83,7 @@ namespace MediaPortal.Backend.Services.ClientCommunication
       // Used to transport an enumeration of MPClientMetadata objects
       DvStateVariable A_ARG_TYPE_ClientMetadataEnumeration = new DvStateVariable("A_ARG_TYPE_ClientMetadataEnumeration", new DvExtendedDataType(UPnPExtendedDataTypes.DtMPClientMetadataEnumeration))
         {
-            SendEvents = false
+          SendEvents = false
         };
       AddStateVariable(A_ARG_TYPE_ClientMetadataEnumeration);
 
@@ -110,16 +110,16 @@ namespace MediaPortal.Backend.Services.ClientCommunication
 
       AttachedClientsChangeCounter = new DvStateVariable("AttachedClientsChangeCounter", new DvStandardDataType(UPnPStandardDataType.Ui4))
         {
-            SendEvents = true,
-            Value = (uint) 0
+          SendEvents = true,
+          Value = (uint) 0
         };
       AddStateVariable(AttachedClientsChangeCounter);
 
       // Csv of client's system ids
       ConnectedClientsChangeCounter = new DvStateVariable("ConnectedClientsChangeCounter", new DvStandardDataType(UPnPStandardDataType.Ui4))
         {
-            SendEvents = true,
-            Value = (uint) 0
+          SendEvents = true,
+          Value = (uint) 0
         };
       AddStateVariable(ConnectedClientsChangeCounter);
 
@@ -127,7 +127,7 @@ namespace MediaPortal.Backend.Services.ClientCommunication
 
       DvAction attachClientAction = new DvAction("AttachClient", OnAttachClient,
           new DvArgument[] {
-            new DvArgument("ClientSystemId", A_ARG_TYPE_SystemId, ArgumentDirection.In),
+            new DvArgument("ClientSystemId", A_ARG_TYPE_SystemId, ArgumentDirection.In)
           },
           new DvArgument[] {
           });
@@ -135,7 +135,7 @@ namespace MediaPortal.Backend.Services.ClientCommunication
 
       DvAction detachClientAction = new DvAction("DetachClient", OnDetachClient,
           new DvArgument[] {
-            new DvArgument("ClientSystemId", A_ARG_TYPE_SystemId, ArgumentDirection.In),
+            new DvArgument("ClientSystemId", A_ARG_TYPE_SystemId, ArgumentDirection.In)
           },
           new DvArgument[] {
           });
@@ -145,7 +145,7 @@ namespace MediaPortal.Backend.Services.ClientCommunication
           new DvArgument[] {
           },
           new DvArgument[] {
-            new DvArgument("AttachedClients", A_ARG_TYPE_ClientMetadataEnumeration, ArgumentDirection.Out, true),
+            new DvArgument("AttachedClients", A_ARG_TYPE_ClientMetadataEnumeration, ArgumentDirection.Out, true)
           });
       AddAction(getAttachedClientsAction);
 
@@ -153,14 +153,14 @@ namespace MediaPortal.Backend.Services.ClientCommunication
           new DvArgument[] {
           },
           new DvArgument[] {
-            new DvArgument("ConnectedClients", A_ARG_TYPE_SystemIdEnumeration, ArgumentDirection.Out, true),
+            new DvArgument("ConnectedClients", A_ARG_TYPE_SystemIdEnumeration, ArgumentDirection.Out, true)
           });
       AddAction(getConnectedClientsAction);
 
       DvAction scheduleImportsAction = new DvAction("ScheduleImports", OnScheduleImports,
           new DvArgument[] {
             new DvArgument("ShareIds", A_ARG_TYPE_UuidEnumeration, ArgumentDirection.In, true),
-            new DvArgument("ImportMode", A_ARG_TYPE_ImportMode, ArgumentDirection.In, true),
+            new DvArgument("ImportMode", A_ARG_TYPE_ImportMode, ArgumentDirection.In, true)
           },
           new DvArgument[] {
           });
@@ -168,10 +168,10 @@ namespace MediaPortal.Backend.Services.ClientCommunication
 
       DvAction getSystemNameForSytemIdAction = new DvAction("GetSystemNameForSystemId", OnGetSystemNameForSytemId,
           new DvArgument[] {
-            new DvArgument("SystemId", A_ARG_TYPE_SystemId, ArgumentDirection.In),
+            new DvArgument("SystemId", A_ARG_TYPE_SystemId, ArgumentDirection.In)
           },
           new DvArgument[] {
-            new DvArgument("SystemName", A_ARG_TYPE_SystemName, ArgumentDirection.Out),
+            new DvArgument("SystemName", A_ARG_TYPE_SystemName, ArgumentDirection.Out)
           });
       AddAction(getSystemNameForSytemIdAction);
 
@@ -179,7 +179,7 @@ namespace MediaPortal.Backend.Services.ClientCommunication
 
       _messageQueue = new AsynchronousMessageQueue(this, new string[]
         {
-            ClientManagerMessaging.CHANNEL,
+            ClientManagerMessaging.CHANNEL
         });
       _messageQueue.MessageReceived += OnMessageReceived;
       _messageQueue.Start();

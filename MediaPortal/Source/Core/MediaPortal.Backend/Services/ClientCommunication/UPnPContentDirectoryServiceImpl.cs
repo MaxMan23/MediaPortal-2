@@ -312,7 +312,7 @@ namespace MediaPortal.Backend.Services.ClientCommunication
       // Shares management
       DvAction registerShareAction = new DvAction("RegisterShare", OnRegisterShare,
           new DvArgument[] {
-            new DvArgument("Share", A_ARG_TYPE_Share, ArgumentDirection.In),
+            new DvArgument("Share", A_ARG_TYPE_Share, ArgumentDirection.In)
           },
           new DvArgument[] {
           });
@@ -332,7 +332,7 @@ namespace MediaPortal.Backend.Services.ClientCommunication
             new DvArgument("BaseResourcePath", A_ARG_TYPE_ResourcePath, ArgumentDirection.In),
             new DvArgument("ShareName", A_ARG_TYPE_Name, ArgumentDirection.In),
             new DvArgument("MediaCategories", A_ARG_TYPE_MediaCategoryEnumeration, ArgumentDirection.In),
-            new DvArgument("RelocateMediaItems", A_ARG_TYPE_MediaItemRelocationMode, ArgumentDirection.In),
+            new DvArgument("RelocateMediaItems", A_ARG_TYPE_MediaItemRelocationMode, ArgumentDirection.In)
           },
           new DvArgument[] {
             new DvArgument("NumAffectedMediaItems", A_ARG_TYPE_Count, ArgumentDirection.Out, true)
@@ -342,7 +342,7 @@ namespace MediaPortal.Backend.Services.ClientCommunication
       DvAction getSharesAction = new DvAction("GetShares", OnGetShares,
           new DvArgument[] {
             new DvArgument("SystemId", A_ARG_TYPE_SystemId, ArgumentDirection.In),
-            new DvArgument("SharesFilter", A_ARG_TYPE_OnlineState, ArgumentDirection.In),
+            new DvArgument("SharesFilter", A_ARG_TYPE_OnlineState, ArgumentDirection.In)
           },
           new DvArgument[] {
             new DvArgument("Shares", A_ARG_TYPE_ShareEnumeration, ArgumentDirection.Out, true)
@@ -351,7 +351,7 @@ namespace MediaPortal.Backend.Services.ClientCommunication
 
       DvAction getShareAction = new DvAction("GetShare", OnGetShare,
           new DvArgument[] {
-            new DvArgument("ShareId", A_ARG_TYPE_Uuid, ArgumentDirection.In),
+            new DvArgument("ShareId", A_ARG_TYPE_Uuid, ArgumentDirection.In)
           },
           new DvArgument[] {
             new DvArgument("Share", A_ARG_TYPE_Share, ArgumentDirection.Out, true)
@@ -360,7 +360,7 @@ namespace MediaPortal.Backend.Services.ClientCommunication
 
       DvAction reImportShareAction = new DvAction("ReImportShare", OnReImportShare,
           new DvArgument[] {
-            new DvArgument("ShareId", A_ARG_TYPE_Uuid, ArgumentDirection.In),
+            new DvArgument("ShareId", A_ARG_TYPE_Uuid, ArgumentDirection.In)
           },
           new DvArgument[] {
           });
@@ -377,7 +377,7 @@ namespace MediaPortal.Backend.Services.ClientCommunication
 
       DvAction addMediaItemAspectStorageAction = new DvAction("AddMediaItemAspectStorage", OnAddMediaItemAspectStorage,
           new DvArgument[] {
-            new DvArgument("MIAM", A_ARG_TYPE_MediaItemAspectMetadata, ArgumentDirection.In),
+            new DvArgument("MIAM", A_ARG_TYPE_MediaItemAspectMetadata, ArgumentDirection.In)
           },
           new DvArgument[] {
           });
@@ -385,7 +385,7 @@ namespace MediaPortal.Backend.Services.ClientCommunication
 
       DvAction removeMediaItemAspectStorageAction = new DvAction("RemoveMediaItemAspectStorage", OnRemoveMediaItemAspectStorage,
           new DvArgument[] {
-            new DvArgument("MIAM_Id", A_ARG_TYPE_Uuid, ArgumentDirection.In),
+            new DvArgument("MIAM_Id", A_ARG_TYPE_Uuid, ArgumentDirection.In)
           },
           new DvArgument[] {
           });
@@ -395,16 +395,16 @@ namespace MediaPortal.Backend.Services.ClientCommunication
           new DvArgument[] {
           },
           new DvArgument[] {
-            new DvArgument("MIATypes", A_ARG_TYPE_UuidEnumeration, ArgumentDirection.Out, true),
+            new DvArgument("MIATypes", A_ARG_TYPE_UuidEnumeration, ArgumentDirection.Out, true)
           });
       AddAction(getAllManagedMediaItemAspectTypesAction);
 
       DvAction getMediaItemAspectMetadataAction = new DvAction("GetMediaItemAspectMetadata", OnGetMediaItemAspectMetadata,
           new DvArgument[] {
-            new DvArgument("MIAM_Id", A_ARG_TYPE_Uuid, ArgumentDirection.In),
+            new DvArgument("MIAM_Id", A_ARG_TYPE_Uuid, ArgumentDirection.In)
           },
           new DvArgument[] {
-            new DvArgument("MIAM", A_ARG_TYPE_MediaItemAspectMetadata, ArgumentDirection.Out, true),
+            new DvArgument("MIAM", A_ARG_TYPE_MediaItemAspectMetadata, ArgumentDirection.Out, true)
           });
       AddAction(getMediaItemAspectMetadataAction);
 
@@ -415,10 +415,10 @@ namespace MediaPortal.Backend.Services.ClientCommunication
             new DvArgument("SystemId", A_ARG_TYPE_SystemId, ArgumentDirection.In),
             new DvArgument("Path", A_ARG_TYPE_ResourcePath, ArgumentDirection.In),
             new DvArgument("NecessaryMIATypes", A_ARG_TYPE_UuidEnumeration, ArgumentDirection.In),
-            new DvArgument("OptionalMIATypes", A_ARG_TYPE_UuidEnumeration, ArgumentDirection.In),
+            new DvArgument("OptionalMIATypes", A_ARG_TYPE_UuidEnumeration, ArgumentDirection.In)
           },
           new DvArgument[] {
-            new DvArgument("MediaItem", A_ARG_TYPE_MediaItem, ArgumentDirection.Out, true),
+            new DvArgument("MediaItem", A_ARG_TYPE_MediaItem, ArgumentDirection.Out, true)
           });
       AddAction(loadItemAction);
 
@@ -426,20 +426,20 @@ namespace MediaPortal.Backend.Services.ClientCommunication
           new DvArgument[] {
             new DvArgument("ParentDirectory", A_ARG_TYPE_Uuid, ArgumentDirection.In),
             new DvArgument("NecessaryMIATypes", A_ARG_TYPE_UuidEnumeration, ArgumentDirection.In),
-            new DvArgument("OptionalMIATypes", A_ARG_TYPE_UuidEnumeration, ArgumentDirection.In),
+            new DvArgument("OptionalMIATypes", A_ARG_TYPE_UuidEnumeration, ArgumentDirection.In)
           },
           new DvArgument[] {
-            new DvArgument("MediaItems", A_ARG_TYPE_MediaItems, ArgumentDirection.Out, true),
+            new DvArgument("MediaItems", A_ARG_TYPE_MediaItems, ArgumentDirection.Out, true)
           });
       AddAction(browseAction);
 
       DvAction searchAction = new DvAction("Search", OnSearch,
           new DvArgument[] {
             new DvArgument("Query", A_ARG_TYPE_MediaItemQuery, ArgumentDirection.In),
-            new DvArgument("OnlineState", A_ARG_TYPE_OnlineState, ArgumentDirection.In),
+            new DvArgument("OnlineState", A_ARG_TYPE_OnlineState, ArgumentDirection.In)
           },
           new DvArgument[] {
-            new DvArgument("MediaItems", A_ARG_TYPE_MediaItems, ArgumentDirection.Out, true),
+            new DvArgument("MediaItems", A_ARG_TYPE_MediaItems, ArgumentDirection.Out, true)
           });
       AddAction(searchAction);
 
@@ -451,10 +451,10 @@ namespace MediaPortal.Backend.Services.ClientCommunication
             new DvArgument("Filter", A_ARG_TYPE_MediaItemFilter, ArgumentDirection.In),
             new DvArgument("SearchMode", A_ARG_TYPE_TextSearchMode, ArgumentDirection.In),
             new DvArgument("OnlineState", A_ARG_TYPE_OnlineState, ArgumentDirection.In),
-            new DvArgument("CapitalizationMode", A_ARG_TYPE_CapitalizationMode, ArgumentDirection.In),
+            new DvArgument("CapitalizationMode", A_ARG_TYPE_CapitalizationMode, ArgumentDirection.In)
           },
           new DvArgument[] {
-            new DvArgument("MediaItems", A_ARG_TYPE_MediaItems, ArgumentDirection.Out, true),
+            new DvArgument("MediaItems", A_ARG_TYPE_MediaItems, ArgumentDirection.Out, true)
           });
       AddAction(textSearchAction);
 
@@ -466,10 +466,10 @@ namespace MediaPortal.Backend.Services.ClientCommunication
             new DvArgument("ProjectionFunction", A_ARG_TYPE_ProjectionFunction, ArgumentDirection.In),
             new DvArgument("NecessaryMIATypes", A_ARG_TYPE_UuidEnumeration, ArgumentDirection.In),
             new DvArgument("Filter", A_ARG_TYPE_MediaItemFilter, ArgumentDirection.In),
-            new DvArgument("OnlineState", A_ARG_TYPE_OnlineState, ArgumentDirection.In),
+            new DvArgument("OnlineState", A_ARG_TYPE_OnlineState, ArgumentDirection.In)
           },
           new DvArgument[] {
-            new DvArgument("ValueGroups", A_ARG_TYPE_MediaItemAttributeValues, ArgumentDirection.Out, true),
+            new DvArgument("ValueGroups", A_ARG_TYPE_MediaItemAttributeValues, ArgumentDirection.Out, true)
           });
       AddAction(getValueGroupsAction);
 
@@ -482,10 +482,10 @@ namespace MediaPortal.Backend.Services.ClientCommunication
             new DvArgument("NecessaryMIATypes", A_ARG_TYPE_UuidEnumeration, ArgumentDirection.In),
             new DvArgument("Filter", A_ARG_TYPE_MediaItemFilter, ArgumentDirection.In),
             new DvArgument("OnlineState", A_ARG_TYPE_OnlineState, ArgumentDirection.In),
-            new DvArgument("GroupingFunction", A_ARG_TYPE_GroupingFunction, ArgumentDirection.In),
+            new DvArgument("GroupingFunction", A_ARG_TYPE_GroupingFunction, ArgumentDirection.In)
           },
           new DvArgument[] {
-            new DvArgument("ResultGroups", A_ARG_TYPE_MLQueryResultGroupEnumeration, ArgumentDirection.Out, true),
+            new DvArgument("ResultGroups", A_ARG_TYPE_MLQueryResultGroupEnumeration, ArgumentDirection.Out, true)
           });
       AddAction(groupValueGroupsAction);
 
@@ -493,10 +493,10 @@ namespace MediaPortal.Backend.Services.ClientCommunication
           new DvArgument[] {
             new DvArgument("NecessaryMIATypes", A_ARG_TYPE_UuidEnumeration, ArgumentDirection.In),
             new DvArgument("Filter", A_ARG_TYPE_MediaItemFilter, ArgumentDirection.In),
-            new DvArgument("OnlineState", A_ARG_TYPE_OnlineState, ArgumentDirection.In),
+            new DvArgument("OnlineState", A_ARG_TYPE_OnlineState, ArgumentDirection.In)
           },
           new DvArgument[] {
-            new DvArgument("NumMediaItems", A_ARG_TYPE_Count, ArgumentDirection.Out, true),
+            new DvArgument("NumMediaItems", A_ARG_TYPE_Count, ArgumentDirection.Out, true)
           });
       AddAction(countMediaItemsAction);
 
@@ -506,7 +506,7 @@ namespace MediaPortal.Backend.Services.ClientCommunication
           new DvArgument[] {
           },
           new DvArgument[] {
-            new DvArgument("Playlists", A_ARG_TYPE_PlaylistIdentificationDataEnumeration, ArgumentDirection.Out, true),
+            new DvArgument("Playlists", A_ARG_TYPE_PlaylistIdentificationDataEnumeration, ArgumentDirection.Out, true)
           });
       AddAction(getPlaylistsAction);
 
@@ -520,7 +520,7 @@ namespace MediaPortal.Backend.Services.ClientCommunication
 
       DvAction deletePlaylistAction = new DvAction("DeletePlaylist", OnDeletePlaylist,
           new DvArgument[] {
-            new DvArgument("PlaylistId", A_ARG_TYPE_Uuid, ArgumentDirection.In),
+            new DvArgument("PlaylistId", A_ARG_TYPE_Uuid, ArgumentDirection.In)
           },
           new DvArgument[] {
             new DvArgument("Success", A_ARG_TYPE_Bool, ArgumentDirection.Out, true)
@@ -529,7 +529,7 @@ namespace MediaPortal.Backend.Services.ClientCommunication
 
       DvAction exportPlaylistAction = new DvAction("ExportPlaylist", OnExportPlaylist,
           new DvArgument[] {
-            new DvArgument("PlaylistId", A_ARG_TYPE_Uuid, ArgumentDirection.In),
+            new DvArgument("PlaylistId", A_ARG_TYPE_Uuid, ArgumentDirection.In)
           },
           new DvArgument[] {
             new DvArgument("PlaylistRawData", A_ARG_TYPE_PlaylistRawData, ArgumentDirection.Out, true)
@@ -540,7 +540,7 @@ namespace MediaPortal.Backend.Services.ClientCommunication
           new DvArgument[] {
             new DvArgument("MediaItemIds", A_ARG_TYPE_UuidEnumeration, ArgumentDirection.In),
             new DvArgument("NecessaryMIATypes", A_ARG_TYPE_UuidEnumeration, ArgumentDirection.In),
-            new DvArgument("OptionalMIATypes", A_ARG_TYPE_UuidEnumeration, ArgumentDirection.In),
+            new DvArgument("OptionalMIATypes", A_ARG_TYPE_UuidEnumeration, ArgumentDirection.In)
           },
           new DvArgument[] {
             new DvArgument("MediaItems", A_ARG_TYPE_MediaItems, ArgumentDirection.Out, true)
@@ -554,10 +554,10 @@ namespace MediaPortal.Backend.Services.ClientCommunication
             new DvArgument("ParentDirectoryId", A_ARG_TYPE_Uuid, ArgumentDirection.In),
             new DvArgument("SystemId", A_ARG_TYPE_SystemId, ArgumentDirection.In),
             new DvArgument("Path", A_ARG_TYPE_ResourcePath, ArgumentDirection.In),
-            new DvArgument("UpdatedMediaItemAspects", A_ARG_TYPE_MediaItemAspects, ArgumentDirection.In),
+            new DvArgument("UpdatedMediaItemAspects", A_ARG_TYPE_MediaItemAspects, ArgumentDirection.In)
           },
           new DvArgument[] {
-            new DvArgument("MediaItemId", A_ARG_TYPE_Uuid, ArgumentDirection.Out, true),
+            new DvArgument("MediaItemId", A_ARG_TYPE_Uuid, ArgumentDirection.Out, true)
           });
       AddAction(addOrUpdateMediaItemAction);
 
@@ -565,7 +565,7 @@ namespace MediaPortal.Backend.Services.ClientCommunication
           new DvArgument[] {
             new DvArgument("SystemId", A_ARG_TYPE_SystemId, ArgumentDirection.In),
             new DvArgument("Path", A_ARG_TYPE_ResourcePath, ArgumentDirection.In),
-            new DvArgument("Inclusive", A_ARG_TYPE_Bool, ArgumentDirection.In),
+            new DvArgument("Inclusive", A_ARG_TYPE_Bool, ArgumentDirection.In)
           },
           new DvArgument[] {
           });
@@ -573,7 +573,7 @@ namespace MediaPortal.Backend.Services.ClientCommunication
 
       DvAction clientStartedShareImportAction = new DvAction("ClientStartedShareImport", OnClientStartedShareImport,
           new DvArgument[] {
-            new DvArgument("ShareId", A_ARG_TYPE_Uuid, ArgumentDirection.In),
+            new DvArgument("ShareId", A_ARG_TYPE_Uuid, ArgumentDirection.In)
           },
           new DvArgument[] {
           });
@@ -581,7 +581,7 @@ namespace MediaPortal.Backend.Services.ClientCommunication
 
       DvAction clientCompletedShareImportAction = new DvAction("ClientCompletedShareImport", OnClientCompletedShareImport,
           new DvArgument[] {
-            new DvArgument("ShareId", A_ARG_TYPE_Uuid, ArgumentDirection.In),
+            new DvArgument("ShareId", A_ARG_TYPE_Uuid, ArgumentDirection.In)
           },
           new DvArgument[] {
           });
@@ -591,7 +591,7 @@ namespace MediaPortal.Backend.Services.ClientCommunication
           new DvArgument[] {
           },
           new DvArgument[] {
-            new DvArgument("ShareIds", A_ARG_TYPE_UuidEnumeration, ArgumentDirection.Out, true), 
+            new DvArgument("ShareIds", A_ARG_TYPE_UuidEnumeration, ArgumentDirection.Out, true)
           });
       AddAction(getCurrentlyImportingSharesAction);
 
@@ -599,7 +599,7 @@ namespace MediaPortal.Backend.Services.ClientCommunication
 
       DvAction notifyPlaybackAction = new DvAction("NotifyPlayback", OnNotifyPlayback,
           new DvArgument[] {
-            new DvArgument("MediaItemId", A_ARG_TYPE_Uuid, ArgumentDirection.In), 
+            new DvArgument("MediaItemId", A_ARG_TYPE_Uuid, ArgumentDirection.In)
           },
           new DvArgument[] {
           });
@@ -610,7 +610,7 @@ namespace MediaPortal.Backend.Services.ClientCommunication
       _messageQueue = new AsynchronousMessageQueue(this, new string[]
         {
             ContentDirectoryMessaging.CHANNEL,
-            ImporterWorkerMessaging.CHANNEL,
+            ImporterWorkerMessaging.CHANNEL
         });
       _messageQueue.MessageReceived += OnMessageReceived;
       _messageQueue.Start();
