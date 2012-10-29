@@ -169,7 +169,7 @@ namespace MediaPortal.Configuration.Builders
     protected static ICollection<string> ParseListenTo(string listenTo)
     {
       return listenTo == null ? null : new List<string>(
-                                         listenTo.Replace(" ", string.Empty).Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                                         listenTo.Replace(" ", string.Empty).Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
     }
 
     protected static IDictionary<string, string> ParseAdditionalData(string additionalData)
@@ -177,7 +177,7 @@ namespace MediaPortal.Configuration.Builders
       IDictionary<string, string> result = new Dictionary<string, string>();
       if (additionalData == null)
         return result;
-      string[] entries = additionalData.Replace(" ", string.Empty).Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+      string[] entries = additionalData.Replace(" ", string.Empty).Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
       foreach (string entry in entries)
       {
         int index = entry.IndexOf('=');
@@ -194,18 +194,15 @@ namespace MediaPortal.Configuration.Builders
       IDictionary<string, Type> result = new Dictionary<string, Type>();
       if (additionalTypesList == null)
         return result;
-      string[] entries = additionalTypesList.Replace(" ", string.Empty).Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+      string[] entries = additionalTypesList.Replace(" ", string.Empty).Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
       foreach (string entry in entries)
       {
         int index = entry.IndexOf('=');
         if (index == -1)
           throw new ArgumentException("AdditionTypes must contain entries in the form 'entry=typename'");
-        else
-        {
-          string typeName = entry.Substring(index + 1, entry.Length - index - 1).Trim();
-          Type type = plugin.GetPluginType(typeName);
-          result.Add(entry.Substring(0, index).Trim(), type);
-        }
+        string typeName = entry.Substring(index + 1, entry.Length - index - 1).Trim();
+        Type type = plugin.GetPluginType(typeName);
+        result.Add(entry.Substring(0, index).Trim(), type);
       }
       return result;
     }

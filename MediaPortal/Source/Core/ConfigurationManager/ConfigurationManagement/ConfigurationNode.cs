@@ -238,7 +238,7 @@ namespace MediaPortal.Configuration.ConfigurationManagement
     public bool FindNode(string location, out IConfigurationNode node)
     {
       node = RegistryHelper.IsAbsolutePath(location) ? GetRootNode() : this;
-      string[] locEntries = location.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+      string[] locEntries = location.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 
       foreach (string locEntry in locEntries)
       {
