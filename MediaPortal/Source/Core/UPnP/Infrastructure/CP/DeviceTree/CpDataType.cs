@@ -106,19 +106,18 @@ namespace UPnP.Infrastructure.CP.DeviceTree
           throw new ArgumentException(string.Format("Invalid UPnP standard data type name '{0}'", standardDataType));
         return new CpStandardDataType(type);
       }
-      else
-      { // Extended data type
-        if (standardDataType != "string")
-          throw new ArgumentException("UPnP extended data types need to yield a standard data type of 'string'");
-        string schemaURI;
-        string dataTypeName;
-        if (!ParserHelper.TryParseDataTypeReference(extendedDataType, dataTypeElementNav, out schemaURI, out dataTypeName))
-          throw new ArgumentException(string.Format("Unable to parse namespace URI of extended data type '{0}'", extendedDataType));
-        UPnPExtendedDataType result;
-        if (dataTypeResolver != null && dataTypeResolver(schemaURI + ":" + dataTypeName, out result))
-          return new CpExtendedDataType(result);
-        return new CpExtendedDataType(new ExtendedDataTypeDummy(schemaURI, dataTypeName));
-      }
+
+      // Extended data type
+      if (standardDataType != "string")
+        throw new ArgumentException("UPnP extended data types need to yield a standard data type of 'string'");
+      string schemaURI;
+      string dataTypeName;
+      if (!ParserHelper.TryParseDataTypeReference(extendedDataType, dataTypeElementNav, out schemaURI, out dataTypeName))
+        throw new ArgumentException(string.Format("Unable to parse namespace URI of extended data type '{0}'", extendedDataType));
+      UPnPExtendedDataType result;
+      if (dataTypeResolver != null && dataTypeResolver(schemaURI + ":" + dataTypeName, out result))
+        return new CpExtendedDataType(result);
+      return new CpExtendedDataType(new ExtendedDataTypeDummy(schemaURI, dataTypeName));
     }
 
     #endregion

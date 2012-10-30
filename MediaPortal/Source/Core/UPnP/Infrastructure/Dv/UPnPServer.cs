@@ -408,7 +408,6 @@ namespace UPnP.Infrastructure.Dv
         }
         // Url didn't match
         context.Respond(HttpHelper.HTTP11, HttpStatusCode.NotFound, null);
-        return;
       }
       catch (Exception e)
       {
@@ -416,7 +415,6 @@ namespace UPnP.Infrastructure.Dv
         IHttpResponse response = request.CreateResponse(context);
         response.Status = HttpStatusCode.InternalServerError;
         SafeSendResponse(response);
-        return;
       }
     }
 
