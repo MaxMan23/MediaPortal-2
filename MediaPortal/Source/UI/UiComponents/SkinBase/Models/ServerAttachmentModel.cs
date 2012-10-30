@@ -78,10 +78,10 @@ namespace MediaPortal.UiComponents.SkinBase.Models
       _isSingleServerAvailableProperty = new WProperty(typeof(bool), false);
       _isMultipleServersAvailableProperty = new WProperty(typeof(bool), false);
       _availableServers = new ItemsList();
-      _messageQueue = new AsynchronousMessageQueue(this, new string[]
+      _messageQueue = new AsynchronousMessageQueue(this, new[]
           {
             ServerConnectionMessaging.CHANNEL,
-            DialogManagerMessaging.CHANNEL,
+            DialogManagerMessaging.CHANNEL
           });
       _messageQueue.MessageReceived += OnMessageReceived;
       // Message queue will be started in method EnterModelContext

@@ -47,10 +47,10 @@ namespace MediaPortal.UiComponents.SkinBase.Services
 
     public ConnectionListenerService()
     {
-      _messageQueue = new AsynchronousMessageQueue(this, new string[]
+      _messageQueue = new AsynchronousMessageQueue(this, new[]
           {
             ServerConnectionMessaging.CHANNEL,
-            NotificationServiceMessaging.CHANNEL,
+            NotificationServiceMessaging.CHANNEL
           });
       _messageQueue.MessageReceived += OnMessageReceived;
       _messageQueue.Start();

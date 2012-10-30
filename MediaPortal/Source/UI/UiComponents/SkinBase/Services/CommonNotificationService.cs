@@ -43,9 +43,9 @@ namespace MediaPortal.UiComponents.SkinBase.Services
 
     public CommonNotificationService()
     {
-      _messageQueue = new AsynchronousMessageQueue(this, new string[]
+      _messageQueue = new AsynchronousMessageQueue(this, new[]
           {
-            ImporterWorkerMessaging.CHANNEL,
+            ImporterWorkerMessaging.CHANNEL
           });
       _messageQueue.MessageReceived += OnMessageReceived;
       _messageQueue.Start();

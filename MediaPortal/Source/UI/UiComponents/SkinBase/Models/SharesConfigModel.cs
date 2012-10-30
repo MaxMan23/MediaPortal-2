@@ -110,10 +110,10 @@ namespace MediaPortal.UiComponents.SkinBase.Models
 
     void SubscribeToMessages()
     {
-      AsynchronousMessageQueue messageQueue = new AsynchronousMessageQueue(this, new string[]
+      AsynchronousMessageQueue messageQueue = new AsynchronousMessageQueue(this, new[]
         {
            ServerConnectionMessaging.CHANNEL,
-           SharesMessaging.CHANNEL,
+           SharesMessaging.CHANNEL
         });
       messageQueue.MessageReceived += OnMessageReceived;
       messageQueue.Start();
@@ -702,7 +702,7 @@ namespace MediaPortal.UiComponents.SkinBase.Models
         IServerConnectionManager serverConnectionManager = ServiceRegistration.Get<IServerConnectionManager>();
         IsHomeServerConnected = serverConnectionManager.IsHomeServerConnected;
         SystemName homeServerSystem = serverConnectionManager.LastHomeServerSystem;
-        IsLocalHomeServer = homeServerSystem == null ? false : homeServerSystem.IsLocalSystem();
+        IsLocalHomeServer = homeServerSystem != null && homeServerSystem.IsLocalSystem();
         lock (_syncObj)
         {
           _enableLocalShares = !IsLocalHomeServer;

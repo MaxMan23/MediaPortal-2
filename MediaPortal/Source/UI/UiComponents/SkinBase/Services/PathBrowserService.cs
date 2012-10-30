@@ -214,13 +214,13 @@ namespace MediaPortal.UiComponents.SkinBase.Services
     {
       ResourcePath choosenResourcePath = ChoosenResourcePath;
       ResourcePath path = choosenResourcePath;
-      bool result = path == null ? false : GetIsPathValid(choosenResourcePath);
+      bool result = path != null && GetIsPathValid(choosenResourcePath);
       IsChoosenPathValid = result;
     }
 
     protected bool GetIsPathValid(ResourcePath path)
     {
-      return _validatePathDlgt == null ? true : _validatePathDlgt(path);
+      return _validatePathDlgt == null || _validatePathDlgt(path);
     }
 
     protected void UpdateChoosenPathDisplayName()
@@ -323,7 +323,6 @@ namespace MediaPortal.UiComponents.SkinBase.Services
       else
       {
         ServiceRegistration.Get<ILogger>().Warn("FileBrowserModel: Cannot access resource path '{0}' for getting child directories", path);
-        yield break;
       }
     }
 
@@ -354,7 +353,6 @@ namespace MediaPortal.UiComponents.SkinBase.Services
       else
       {
         ServiceRegistration.Get<ILogger>().Warn("FileBrowserModel: Cannot access resource path '{0}' for getting files", path);
-        yield break;
       }
     }
 

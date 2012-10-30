@@ -78,10 +78,10 @@ namespace MediaPortal.UiComponents.SkinBase.Models
 
     void SubscribeToMessages()
     {
-      AsynchronousMessageQueue messageQueue = new AsynchronousMessageQueue(this, new string[]
+      AsynchronousMessageQueue messageQueue = new AsynchronousMessageQueue(this, new[]
         {
            ServerConnectionMessaging.CHANNEL,
-           ContentDirectoryMessaging.CHANNEL,
+           ContentDirectoryMessaging.CHANNEL
         });
       messageQueue.MessageReceived += OnMessageReceived;
       messageQueue.Start();
@@ -183,7 +183,7 @@ namespace MediaPortal.UiComponents.SkinBase.Models
       IServerController sc = scm.ServerController;
       if (sc == null)
         return;
-      sc.ScheduleImports(new Guid[] {share.ShareId}, ImportJobType.Refresh);
+      sc.ScheduleImports(new[] {share.ShareId}, ImportJobType.Refresh);
     }
 
     #endregion

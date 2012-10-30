@@ -113,10 +113,10 @@ namespace MediaPortal.UiComponents.SkinBase.Models
 
     private void InitializeMessageQueue()
     {
-      _messageQueue = new AsynchronousMessageQueue(this, new string[]
+      _messageQueue = new AsynchronousMessageQueue(this, new[]
         {
             PlayerManagerMessaging.CHANNEL,
-            PlayerContextManagerMessaging.CHANNEL,
+            PlayerContextManagerMessaging.CHANNEL
         });
       _messageQueue.MessageReceived += OnMessageReceived;
     }

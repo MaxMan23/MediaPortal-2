@@ -67,10 +67,10 @@ namespace MediaPortal.UiComponents.SkinBase.Models
 
     public NotificationsModel()
     {
-      _messageQueue = new AsynchronousMessageQueue(this, new string[]
+      _messageQueue = new AsynchronousMessageQueue(this, new[]
         {
             NotificationServiceMessaging.CHANNEL,
-            WorkflowManagerMessaging.CHANNEL,
+            WorkflowManagerMessaging.CHANNEL
         });
       _messageQueue.MessageReceived += OnMessageReceived;
       _messageQueue.Start();

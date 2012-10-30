@@ -62,11 +62,11 @@ namespace MediaPortal.UiComponents.SkinBase.Actions
 
     void SubscribeToMessages()
     {
-      _messageQueue = new AsynchronousMessageQueue(this, new string[]
+      _messageQueue = new AsynchronousMessageQueue(this, new[]
         {
            PlayerManagerMessaging.CHANNEL,
            PlayerContextManagerMessaging.CHANNEL,
-           WorkflowManagerMessaging.CHANNEL,
+           WorkflowManagerMessaging.CHANNEL
         });
       _messageQueue.MessageReceived += OnMessageReceived;
       _messageQueue.Start();
@@ -122,8 +122,7 @@ namespace MediaPortal.UiComponents.SkinBase.Actions
       IPlayerContextManager playerContextManager = ServiceRegistration.Get<IPlayerContextManager>();
       IWorkflowManager workflowManager = ServiceRegistration.Get<IWorkflowManager>();
       IPlayerContext pc = playerContextManager.CurrentPlayerContext;
-      bool visible = pc == null ? false :
-          !workflowManager.IsStateContainedInNavigationStack(pc.CurrentlyPlayingWorkflowStateId);
+      bool visible = pc != null && !workflowManager.IsStateContainedInNavigationStack(pc.CurrentlyPlayingWorkflowStateId);
       if (visible == _isVisible)
         return;
       _isVisible = visible;

@@ -58,7 +58,7 @@ namespace MediaPortal.UiComponents.SkinBase.Models
       _homeServerProperty = new WProperty(typeof(string), string.Empty);
       _isHomeServerAttachedProperty = new WProperty(typeof(bool), false);
       _isHomeServerConnectedProperty = new WProperty(typeof(bool), false);
-      _messageQueue = new AsynchronousMessageQueue(this, new string[]
+      _messageQueue = new AsynchronousMessageQueue(this, new[]
           {
             ServerConnectionMessaging.CHANNEL
           });

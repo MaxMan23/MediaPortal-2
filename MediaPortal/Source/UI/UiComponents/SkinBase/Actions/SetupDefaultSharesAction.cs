@@ -54,10 +54,10 @@ namespace MediaPortal.UiComponents.SkinBase.Actions
 
     void SubscribeToMessages()
     {
-      _messageQueue = new AsynchronousMessageQueue(this, new string[]
+      _messageQueue = new AsynchronousMessageQueue(this, new[]
         {
            ServerConnectionMessaging.CHANNEL,
-           SharesMessaging.CHANNEL,
+           SharesMessaging.CHANNEL
         });
       _messageQueue.MessageReceived += OnMessageReceived;
       _messageQueue.Start();
@@ -106,7 +106,7 @@ namespace MediaPortal.UiComponents.SkinBase.Actions
         IServerConnectionManager serverConnectionManager = ServiceRegistration.Get<IServerConnectionManager>();
         IContentDirectory contentDirectory = serverConnectionManager.ContentDirectory;
         SystemName homeServerSystem = serverConnectionManager.LastHomeServerSystem;
-        bool localHomeServer = homeServerSystem == null ? false : homeServerSystem.IsLocalSystem();
+        bool localHomeServer = homeServerSystem != null && homeServerSystem.IsLocalSystem();
         bool homeServerConncted = contentDirectory != null;
         ILocalSharesManagement localSharesManagement = ServiceRegistration.Get<ILocalSharesManagement>();
         return localHomeServer ? (homeServerConncted && contentDirectory.GetShares(null, SharesFilter.All).Count == 0) :
@@ -155,7 +155,7 @@ namespace MediaPortal.UiComponents.SkinBase.Actions
       IServerConnectionManager serverConnectionManager = ServiceRegistration.Get<IServerConnectionManager>();
       IContentDirectory contentDirectory = serverConnectionManager.ContentDirectory;
       SystemName homeServerSystem = serverConnectionManager.LastHomeServerSystem;
-      bool localHomeServer = homeServerSystem == null ? false : homeServerSystem.IsLocalSystem();
+      bool localHomeServer = homeServerSystem != null && homeServerSystem.IsLocalSystem();
       bool homeServerConncted = contentDirectory != null;
 
       ILocalSharesManagement localSharesManagement = ServiceRegistration.Get<ILocalSharesManagement>();

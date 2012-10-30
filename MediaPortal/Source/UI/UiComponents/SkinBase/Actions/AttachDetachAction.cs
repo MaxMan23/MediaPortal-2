@@ -55,7 +55,7 @@ namespace MediaPortal.UiComponents.SkinBase.Actions
 
     void SubscribeToMessages()
     {
-      _messageQueue = new AsynchronousMessageQueue(this, new string[]
+      _messageQueue = new AsynchronousMessageQueue(this, new[]
         {
             ServerConnectionMessaging.CHANNEL
         });
