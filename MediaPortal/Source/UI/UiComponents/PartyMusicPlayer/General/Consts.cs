@@ -64,11 +64,11 @@ namespace MediaPortal.UiComponents.PartyMusicPlayer.General
     public const string STR_MODULE_ID_PARTY_MUSIC_PLAYER = "DDDA96AB-CAAF-482D-A6FA-9934E3F39B1E";
     public static readonly Guid MODULE_ID_PARTY_MUSIC_PLAYER = new Guid(STR_MODULE_ID_PARTY_MUSIC_PLAYER);
 
-    public static readonly Guid[] NECESSARY_AUDIO_MIAS = new Guid[]
+    public static readonly Guid[] NECESSARY_AUDIO_MIAS = new[]
       {
           ProviderResourceAspect.ASPECT_ID,
           MediaAspect.ASPECT_ID,
-          AudioAspect.ASPECT_ID,
+          AudioAspect.ASPECT_ID
       };
 
     public static readonly Guid[] EMPTY_GUID_ENUMERATION = new Guid[] {};
