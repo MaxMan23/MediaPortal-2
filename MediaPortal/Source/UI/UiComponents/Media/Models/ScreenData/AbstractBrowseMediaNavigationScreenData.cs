@@ -128,7 +128,7 @@ namespace MediaPortal.UiComponents.Media.Models.ScreenData
       workflowManager.StartBatchUpdate();
       try
       {
-        workflowManager.NavigatePopStates(new Guid[] {Consts.WF_STATE_ID_LOCAL_MEDIA_NAVIGATION_ROOT, Consts.WF_STATE_ID_BROWSE_MEDIA_NAVIGATION_ROOT});
+        workflowManager.NavigatePopStates(new[] {Consts.WF_STATE_ID_LOCAL_MEDIA_NAVIGATION_ROOT, Consts.WF_STATE_ID_BROWSE_MEDIA_NAVIGATION_ROOT});
 
         workflowManager.NavigatePush(rootWorkflowState);
 

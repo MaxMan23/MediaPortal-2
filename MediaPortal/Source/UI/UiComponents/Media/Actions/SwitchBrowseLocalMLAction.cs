@@ -78,10 +78,10 @@ namespace MediaPortal.UiComponents.Media.Actions
       IWorkflowManager workflowManager = ServiceRegistration.Get<IWorkflowManager>();
       _displayTitle = LocalizationHelper.CreateResourceString(workflowManager.IsStateContainedInNavigationStack(Consts.WF_STATE_ID_LOCAL_MEDIA_NAVIGATION_ROOT) ?
           Consts.RES_SWITCH_TO_BROWSE_ML_VIEW : Consts.RES_SWITCH_TO_LOCAL_MEDIA_VIEW);
-      _isInBrowseState = workflowManager.IsAnyStateContainedInNavigationStack(new Guid[]
+      _isInBrowseState = workflowManager.IsAnyStateContainedInNavigationStack(new[]
         {
             Consts.WF_STATE_ID_LOCAL_MEDIA_NAVIGATION_ROOT,
-            Consts.WF_STATE_ID_BROWSE_MEDIA_NAVIGATION_ROOT,
+            Consts.WF_STATE_ID_BROWSE_MEDIA_NAVIGATION_ROOT
         }) && MediaNavigationModel.GetNavigationData(workflowManager.CurrentNavigationContext, false) != null;
     }
 

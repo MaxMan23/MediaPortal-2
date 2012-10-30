@@ -39,7 +39,7 @@ namespace MediaPortal.UiComponents.Media.Views
 
     void SubscribeToMessages()
     {
-      _messageQueue = new AsynchronousMessageQueue(this, new string[]
+      _messageQueue = new AsynchronousMessageQueue(this, new[]
         {
             RemovableMediaMessaging.CHANNEL
         });
@@ -81,7 +81,7 @@ namespace MediaPortal.UiComponents.Media.Views
 
     public event ViewChangedDlgt Changed;
 
-    public void install()
+    public void Install()
     {
       SubscribeToMessages();
     }

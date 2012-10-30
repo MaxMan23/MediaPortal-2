@@ -141,7 +141,7 @@ namespace MediaPortal.UiComponents.Media.Models
       String stepList = settings.SkipStepList;
 
       _skipSteps.Clear();
-      foreach (string step in stepList.Split(new char[] { ',' }))
+      foreach (string step in stepList.Split(new[] { ',' }))
       {
         int stepValue;
         if (int.TryParse(step, out stepValue))

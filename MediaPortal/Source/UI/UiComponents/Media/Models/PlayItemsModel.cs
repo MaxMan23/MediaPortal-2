@@ -673,22 +673,22 @@ namespace MediaPortal.UiComponents.Media.Models
             new ListItem(Consts.KEY_NAME, Consts.RES_ADD_ALL_AUDIO)
               {
                   Command = new MethodDelegateCommand(() => CheckQueryPlayAction_Continue(
-                      getMediaItemsFunction, new Guid[] {AudioAspect.Metadata.AspectId}, AVType.Audio))
+                      getMediaItemsFunction, new[] {AudioAspect.Metadata.AspectId}, AVType.Audio))
               },
             new ListItem(Consts.KEY_NAME, Consts.RES_ADD_ALL_VIDEOS)
               {
                   Command = new MethodDelegateCommand(() => CheckQueryPlayAction_Continue(
-                      getMediaItemsFunction, new Guid[] {VideoAspect.Metadata.AspectId}, AVType.Video))
+                      getMediaItemsFunction, new[] {VideoAspect.Metadata.AspectId}, AVType.Video))
               },
             new ListItem(Consts.KEY_NAME, Consts.RES_ADD_ALL_IMAGES)
               {
                   Command = new MethodDelegateCommand(() => CheckQueryPlayAction_Continue(
-                      getMediaItemsFunction, new Guid[] {ImageAspect.Metadata.AspectId}, AVType.Video))
+                      getMediaItemsFunction, new[] {ImageAspect.Metadata.AspectId}, AVType.Video))
               },
             new ListItem(Consts.KEY_NAME, Consts.RES_ADD_VIDEOS_AND_IMAGES)
               {
                   Command = new MethodDelegateCommand(() => CheckQueryPlayAction_Continue(
-                      getMediaItemsFunction, new Guid[] {VideoAspect.Metadata.AspectId, ImageAspect.Metadata.AspectId}, AVType.Video))
+                      getMediaItemsFunction, new[] {VideoAspect.Metadata.AspectId, ImageAspect.Metadata.AspectId}, AVType.Video))
               },
         };
       IScreenManager screenManager = ServiceRegistration.Get<IScreenManager>();

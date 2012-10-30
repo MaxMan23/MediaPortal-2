@@ -66,12 +66,12 @@ namespace MediaPortal.UiComponents.Media.FilterCriteria
       int numSmallItems = cd.CountMediaItems(necessaryMIATypeIds, smallFilter, true);
       int numMediumItems = cd.CountMediaItems(necessaryMIATypeIds, mediumFilter, true);
       int numBigItems = cd.CountMediaItems(necessaryMIATypeIds, bigFilter, true);
-      return new List<FilterValue>(new FilterValue[]
+      return new List<FilterValue>(new[]
         {
             new FilterValue(Consts.RES_VALUE_EMPTY_TITLE, emptyFilter, null, numEmptyItems, this),
             new FilterValue(Consts.RES_IMAGE_FILTER_SMALL, smallFilter, null, numSmallItems, this),
             new FilterValue(Consts.RES_IMAGE_FILTER_MEDIUM, mediumFilter, null, numMediumItems, this),
-            new FilterValue(Consts.RES_IMAGE_FILTER_BIG, bigFilter, null, numBigItems, this),
+            new FilterValue(Consts.RES_IMAGE_FILTER_BIG, bigFilter, null, numBigItems, this)
         }.Where(fv => !fv.NumItems.HasValue || fv.NumItems.Value > 0));
     }
 

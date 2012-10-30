@@ -101,10 +101,10 @@ namespace MediaPortal.UiComponents.Media.Models
 
     void SubscribeToMessages()
     {
-      AsynchronousMessageQueue messageQueue = new AsynchronousMessageQueue(this, new string[]
+      AsynchronousMessageQueue messageQueue = new AsynchronousMessageQueue(this, new[]
         {
            ServerConnectionMessaging.CHANNEL,
-           ContentDirectoryMessaging.CHANNEL,
+           ContentDirectoryMessaging.CHANNEL
         });
       messageQueue.MessageReceived += OnMessageReceived;
       messageQueue.Start();
@@ -304,16 +304,16 @@ namespace MediaPortal.UiComponents.Media.Models
         dialogManager.ShowDialog(SkinBase.General.Consts.RES_SYSTEM_ERROR, Consts.RES_PLAYLIST_LOAD_ERROR_LOADING, DialogType.OkDialog, false, null);
         return;
       }
-      Guid[] necessaryMIATypes = new Guid[]
+      Guid[] necessaryMIATypes = new[]
           {
               ProviderResourceAspect.ASPECT_ID,
-              MediaAspect.ASPECT_ID,
+              MediaAspect.ASPECT_ID
           };
-      Guid[] optionalMIATypes = new Guid[]
+      Guid[] optionalMIATypes = new[]
           {
               AudioAspect.ASPECT_ID,
               VideoAspect.ASPECT_ID,
-              ImageAspect.ASPECT_ID,
+              ImageAspect.ASPECT_ID
           };
       // Big playlists cannot be loaded in one single step. We have several problems if we try to do so:
       // 1) Loading the playlist at once at the server results in one huge SQL IN statement which might break the SQL engine
@@ -331,7 +331,7 @@ namespace MediaPortal.UiComponents.Media.Models
     public void NavigateRemovePlaylistSaveWorkflow()
     {
       IWorkflowManager workflowManager = ServiceRegistration.Get<IWorkflowManager>();
-      workflowManager.NavigatePopStates(new Guid[]
+      workflowManager.NavigatePopStates(new[]
         {
             Consts.WF_STATE_ID_PLAYLIST_SAVE_EDIT_NAME,
             Consts.WF_STATE_ID_PLAYLIST_SAVE_FAILED,

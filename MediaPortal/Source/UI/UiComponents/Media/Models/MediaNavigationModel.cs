@@ -519,16 +519,16 @@ namespace MediaPortal.UiComponents.Media.Models
                 };
             return null;
           };
-        IEnumerable<Guid> necessaryMIATypeIDs = new Guid[]
+        IEnumerable<Guid> necessaryMIATypeIDs = new[]
             {
                 ProviderResourceAspect.ASPECT_ID,
-                MediaAspect.ASPECT_ID,
+                MediaAspect.ASPECT_ID
             };
-        IEnumerable<Guid> optionalMIATypeIDs = new Guid[]
+        IEnumerable<Guid> optionalMIATypeIDs = new[]
             {
                 AudioAspect.ASPECT_ID,
                 VideoAspect.ASPECT_ID,
-                ImageAspect.ASPECT_ID,
+                ImageAspect.ASPECT_ID
             }.Union(skinDependentOptionalMIATypeIDs);
         string viewName = workflowStateId == Consts.WF_STATE_ID_LOCAL_MEDIA_NAVIGATION_ROOT ?
             Consts.RES_LOCAL_MEDIA_ROOT_VIEW_NAME : Consts.RES_BROWSE_MEDIA_ROOT_VIEW_NAME;

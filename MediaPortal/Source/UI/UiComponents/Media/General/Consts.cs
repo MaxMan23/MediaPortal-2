@@ -419,41 +419,41 @@ namespace MediaPortal.UiComponents.Media.General
 
     public static int ADD_TO_PLAYLIST_UPDATE_INTERVAL = 50;
 
-    public static readonly Guid[] NECESSARY_VIDEO_MIAS = new Guid[]
+    public static readonly Guid[] NECESSARY_VIDEO_MIAS = new[]
+      {
+          ProviderResourceAspect.ASPECT_ID,
+          MediaAspect.ASPECT_ID,
+          VideoAspect.ASPECT_ID
+      };
+
+    public static readonly Guid[] NECESSARY_SERIES_MIAS = new[]
       {
           ProviderResourceAspect.ASPECT_ID,
           MediaAspect.ASPECT_ID,
           VideoAspect.ASPECT_ID,
+          SeriesAspect.ASPECT_ID
       };
 
-    public static readonly Guid[] NECESSARY_SERIES_MIAS = new Guid[]
+    public static readonly Guid[] NECESSARY_MOVIES_MIAS = new[]
       {
           ProviderResourceAspect.ASPECT_ID,
           MediaAspect.ASPECT_ID,
           VideoAspect.ASPECT_ID,
-          SeriesAspect.ASPECT_ID,
+          MovieAspect.ASPECT_ID
       };
 
-    public static readonly Guid[] NECESSARY_MOVIES_MIAS = new Guid[]
+    public static readonly Guid[] NECESSARY_AUDIO_MIAS = new[]
       {
           ProviderResourceAspect.ASPECT_ID,
           MediaAspect.ASPECT_ID,
-          VideoAspect.ASPECT_ID,
-          MovieAspect.ASPECT_ID,
+          AudioAspect.ASPECT_ID
       };
 
-    public static readonly Guid[] NECESSARY_AUDIO_MIAS = new Guid[]
+    public static readonly Guid[] NECESSARY_IMAGE_MIAS = new[]
       {
           ProviderResourceAspect.ASPECT_ID,
           MediaAspect.ASPECT_ID,
-          AudioAspect.ASPECT_ID,
-      };
-
-    public static readonly Guid[] NECESSARY_IMAGE_MIAS = new Guid[]
-      {
-          ProviderResourceAspect.ASPECT_ID,
-          MediaAspect.ASPECT_ID,
-          ImageAspect.ASPECT_ID,
+          ImageAspect.ASPECT_ID
       };
 
     public static readonly string MEDIA_SKIN_SETTINGS_REGISTRATION_PATH = "/Media/SkinSettings";

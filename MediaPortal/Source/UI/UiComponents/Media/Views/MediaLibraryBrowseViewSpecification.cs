@@ -43,7 +43,7 @@ namespace MediaPortal.UiComponents.Media.Views
   {
     #region Consts
 
-    protected static IEnumerable<Guid> DIRECTORY_MIA_ID_ENUMERATION = new Guid[]
+    protected static IEnumerable<Guid> DIRECTORY_MIA_ID_ENUMERATION = new[]
         {
           ProviderResourceAspect.ASPECT_ID,
           MediaAspect.ASPECT_ID,

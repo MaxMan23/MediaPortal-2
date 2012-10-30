@@ -84,7 +84,7 @@ namespace MediaPortal.UiComponents.Media.FilterCriteria
             new BooleanCombinationFilter(BooleanOperator.And, new IFilter[]
               {
                   new RelationalFilter(MediaAspect.ATTR_RECORDINGTIME, RelationalOperator.GE, new DateTime(year, 1, 1)),
-                  new RelationalFilter(MediaAspect.ATTR_RECORDINGTIME, RelationalOperator.LT, new DateTime(year + 10, 1, 1)),
+                  new RelationalFilter(MediaAspect.ATTR_RECORDINGTIME, RelationalOperator.LT, new DateTime(year + 10, 1, 1))
               }), null, numItems, this));
       }
       return result;

@@ -101,7 +101,7 @@ namespace MediaPortal.UiComponents.Media.Views
 
     public MediaLibraryQueryViewSpecification CreateSubViewSpecification(string viewDisplayName, IFilter filter)
     {
-      IFilter combinedFilter = _filter == null ? filter : BooleanCombinationFilter.CombineFilters(BooleanOperator.And, new IFilter[] {_filter, filter});
+      IFilter combinedFilter = _filter == null ? filter : BooleanCombinationFilter.CombineFilters(BooleanOperator.And, new[] {_filter, filter});
       return new MediaLibraryQueryViewSpecification(viewDisplayName, combinedFilter, _necessaryMIATypeIds, _optionalMIATypeIds, _onlyOnline)
         {
             MaxNumItems = _maxNumItems

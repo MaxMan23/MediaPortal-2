@@ -280,7 +280,7 @@ namespace MediaPortal.UiComponents.Media.Models
       {
         AbstractScreenData newScreen = screen; // Necessary to be used in closure
         WorkflowAction action = new MethodDelegateAction(Guid.NewGuid(),
-            _navigationContextName + "->" + newScreen.MenuItemLabel, new Guid[] {_currentWorkflowStateId},
+            _navigationContextName + "->" + newScreen.MenuItemLabel, new[] {_currentWorkflowStateId},
             LocalizationHelper.CreateResourceString(newScreen.MenuItemLabel), () =>
               {
                 _currentScreenData.ReleaseScreenData();
