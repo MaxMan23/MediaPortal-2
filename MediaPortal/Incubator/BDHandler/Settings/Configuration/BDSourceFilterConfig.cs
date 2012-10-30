@@ -54,8 +54,8 @@ namespace MediaPortal.Plugins.BDHandler.Settings.Configuration
 
     public BDSourceFilterConfig()
       : base(
-        new Guid[] { Guid.Empty },
-        new Guid[] { Guid.Empty } // Currently a dynamic detection of Bluray Source Filters is not possible
+        new[] { Guid.Empty },
+        new[] { Guid.Empty } // Currently a dynamic detection of Bluray Source Filters is not possible
         )
     {
       _codecList = new List<CodecInfo>();
