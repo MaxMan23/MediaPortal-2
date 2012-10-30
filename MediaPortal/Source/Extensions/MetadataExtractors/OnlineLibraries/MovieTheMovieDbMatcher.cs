@@ -54,8 +54,8 @@ namespace MediaPortal.Extensions.OnlineLibraries
     public static string CACHE_PATH = ServiceRegistration.Get<IPathManager>().GetPath(@"<DATA>\TheMovieDB\");
     protected static string _matchesSettingsFile = Path.Combine(CACHE_PATH, "Matches.xml");
     protected static string _collectionMatchesFile = Path.Combine(CACHE_PATH, "CollectionMatches.xml");
-    
-    MatchStorage<MovieCollectionMatch, int> _collectionStorage = new MatchStorage<MovieCollectionMatch, int>(_collectionMatchesFile);
+
+    readonly MatchStorage<MovieCollectionMatch, int> _collectionStorage = new MatchStorage<MovieCollectionMatch, int>(_collectionMatchesFile);
 
     protected override string MatchesSettingsFile
     {
