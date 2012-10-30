@@ -101,9 +101,9 @@ namespace MediaPortal.Server
     private void OnMainFormShown(object sender, System.EventArgs e)
     {
       InitializeLocalizedControls();
-      _messageQueue = new AsynchronousMessageQueue("Server main form", new string[]
+      _messageQueue = new AsynchronousMessageQueue("Server main form", new[]
         {
-            ClientManagerMessaging.CHANNEL,
+            ClientManagerMessaging.CHANNEL
         });
       _messageQueue.MessageReceived += OnMessageReceived;
       _messageQueue.Start();
@@ -157,7 +157,7 @@ namespace MediaPortal.Server
 
     protected ListViewItem CreateClientItem(string clientName, string clientSystem, bool isConnected)
     {
-      return new ListViewItem(new string[] {clientName, clientSystem, LocalizationHelper.Translate(isConnected ? CONNECTED_RES : DISCONNECTED_RES)});
+      return new ListViewItem(new[] {clientName, clientSystem, LocalizationHelper.Translate(isConnected ? CONNECTED_RES : DISCONNECTED_RES)});
     }
 
     protected void InitializeLocalizedControls()
