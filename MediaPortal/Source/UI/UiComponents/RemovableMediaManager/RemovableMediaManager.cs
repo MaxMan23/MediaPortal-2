@@ -49,7 +49,7 @@ namespace MediaPortal.UiComponents.RemovableMediaManager
     {
       lock (_syncObj)
       {
-        _messageQueue = new AsynchronousMessageQueue(this, new string[]
+        _messageQueue = new AsynchronousMessageQueue(this, new[]
           {
              RemovableMediaMessaging.CHANNEL
           });
@@ -121,7 +121,6 @@ namespace MediaPortal.UiComponents.RemovableMediaManager
             PlayItemsModel.CheckQueryPlayAction(() => mcddh.GetAllMediaItems());
             break;
         }
-      return;
     }
 
     #region IPluginStateTracker implementation
