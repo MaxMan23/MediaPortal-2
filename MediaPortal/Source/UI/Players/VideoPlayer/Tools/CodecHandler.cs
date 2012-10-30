@@ -167,7 +167,7 @@ namespace MediaPortal.UI.Players.Video.Tools
     /// <returns>List of names</returns>
     public static List<CodecInfo> GetFilters(Guid mediaType, Guid mediaSubType, Merit merit)
     {
-      return GetFilters(new Guid[] { mediaType, mediaSubType }, new Guid[0], merit);
+      return GetFilters(new[] { mediaType, mediaSubType }, new Guid[0], merit);
     }
 
     /// <summary>

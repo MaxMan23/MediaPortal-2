@@ -32,8 +32,8 @@ namespace MediaPortal.UI.Players.Video.Settings.Configuration
   {
     public AudioCodecLATMAAC()
       : base(
-        new Guid[] { MediaType.Audio, CodecHandler.MEDIASUBTYPE_LATM_AAC_AUDIO }, // require LATM-AAC input
-        new Guid[] { MediaType.Audio, Guid.Empty} // require any Audio output
+        new[] { MediaType.Audio, CodecHandler.MEDIASUBTYPE_LATM_AAC_AUDIO }, // require LATM-AAC input
+        new[] { MediaType.Audio, Guid.Empty} // require any Audio output
       )
     { }
 

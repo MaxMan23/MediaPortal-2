@@ -32,8 +32,8 @@ namespace MediaPortal.UI.Players.Video.Settings.Configuration
   {
     public AudioCodecAAC()
       : base(
-        new Guid[] { MediaType.Audio, CodecHandler.MEDIASUBTYPE_AAC_AUDIO }, // require AAC input
-        new Guid[] { MediaType.Audio, Guid.Empty } // require any Audio output
+        new[] { MediaType.Audio, CodecHandler.MEDIASUBTYPE_AAC_AUDIO }, // require AAC input
+        new[] { MediaType.Audio, Guid.Empty } // require any Audio output
       )
     { }
 

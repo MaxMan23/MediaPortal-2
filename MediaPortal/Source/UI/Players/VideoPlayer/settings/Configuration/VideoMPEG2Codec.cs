@@ -31,8 +31,8 @@ namespace MediaPortal.UI.Players.Video.Settings.Configuration
   {
     public VideoMPEG2Codec()
       : base(
-        new Guid[] { MediaType.Video, MediaSubType.Mpeg2Video }, // require MPEG2 video input
-        new Guid[] { MediaType.Video, Guid.Empty } // requires any video output, but exclude streams (as produced my Muxers)
+        new[] { MediaType.Video, MediaSubType.Mpeg2Video }, // require MPEG2 video input
+        new[] { MediaType.Video, Guid.Empty } // requires any video output, but exclude streams (as produced my Muxers)
       ) { }
 
     public override void Load()

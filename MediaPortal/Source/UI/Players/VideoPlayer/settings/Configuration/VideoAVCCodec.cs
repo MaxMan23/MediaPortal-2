@@ -32,8 +32,8 @@ namespace MediaPortal.UI.Players.Video.Settings.Configuration
   {
     public VideoAVCCodec()
       : base(
-        new Guid[] { MediaType.Video, CodecHandler.MEDIASUBTYPE_AVC }, // require AVC video input
-        new Guid[] { MediaType.Video, Guid.Empty } // requires any video output, but exclude streams (as produced my Muxers)
+        new[] { MediaType.Video, CodecHandler.MEDIASUBTYPE_AVC }, // require AVC video input
+        new[] { MediaType.Video, Guid.Empty } // requires any video output, but exclude streams (as produced my Muxers)
       ) { }
 
     public override void Load()

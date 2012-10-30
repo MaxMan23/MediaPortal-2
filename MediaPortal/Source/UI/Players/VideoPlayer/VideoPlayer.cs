@@ -87,7 +87,7 @@ namespace MediaPortal.UI.Players.Video
     public const string PLAYER_ID_STR = "9EF8D975-575A-4c64-AA54-500C97745969";
     public const string AUDIO_STREAM_NAME = "Audio1";
 
-    protected static string[] DEFAULT_AUDIO_STREAM_NAMES = new string[] { AUDIO_STREAM_NAME };
+    protected static string[] DEFAULT_AUDIO_STREAM_NAMES = new[] { AUDIO_STREAM_NAME };
     protected static string[] EMPTY_STRING_ARRAY = new string[] { };
 
     // The default name for "No subtitles available" or "Subtitles disabled".
@@ -211,7 +211,7 @@ namespace MediaPortal.UI.Players.Video
 
     protected void SubscribeToMessages()
     {
-      _messageQueue = new AsynchronousMessageQueue(this, new string[] { WindowsMessaging.CHANNEL });
+      _messageQueue = new AsynchronousMessageQueue(this, new[] { WindowsMessaging.CHANNEL });
       _messageQueue.MessageReceived += OnMessageReceived;
       _messageQueue.Start();
     }
@@ -570,7 +570,7 @@ namespace MediaPortal.UI.Players.Video
 
           if (settings.AudioCodec != null)
           {
-            foreach (Guid guid in new Guid[]
+            foreach (Guid guid in new[]
                                     {
                                       MediaSubType.Mpeg2Audio,
                                       MediaSubType.MPEG1AudioPayload,

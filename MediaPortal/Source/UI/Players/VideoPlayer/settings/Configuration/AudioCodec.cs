@@ -31,8 +31,8 @@ namespace MediaPortal.UI.Players.Video.Settings.Configuration
   {
     public AudioCodec()
       : base(
-        new Guid[] { MediaType.Audio, MediaSubType.Mpeg2Audio}, // require any Audio input
-        new Guid[] { MediaType.Audio, Guid.Empty} // require any Audio output
+        new[] { MediaType.Audio, MediaSubType.Mpeg2Audio}, // require any Audio input
+        new[] { MediaType.Audio, Guid.Empty} // require any Audio output
       )
     { }
 
