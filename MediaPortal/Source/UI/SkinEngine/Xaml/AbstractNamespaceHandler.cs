@@ -95,7 +95,7 @@ namespace MediaPortal.UI.SkinEngine.Xaml
     {
       MethodInfo mi = GetAttachedPropertyGetter(propertyProvider, propertyName);
       if (mi != null)
-        return (AbstractProperty) mi.Invoke(targetObject, new object[] {targetObject});
+        return (AbstractProperty) mi.Invoke(targetObject, new[] {targetObject});
       throw new InvalidOperationException(string.Format("Attached property '{0}.{1}' is not available on new target object '{2}'",
           propertyProvider, propertyName, targetObject));
     }

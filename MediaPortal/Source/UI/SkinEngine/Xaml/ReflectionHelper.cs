@@ -342,7 +342,6 @@ namespace MediaPortal.UI.SkinEngine.Xaml
       if (nonGenericType.IsAssignableFrom(type))
       {
         resultEnumerableType = nonGenericType;
-        return;
       }
     }
 
@@ -394,7 +393,6 @@ namespace MediaPortal.UI.SkinEngine.Xaml
       if (typeof(IDictionary).IsAssignableFrom(type))
       {
         resultDictionaryType = typeof(IDictionary);
-        return;
       }
     }
 
@@ -424,7 +422,7 @@ namespace MediaPortal.UI.SkinEngine.Xaml
           iact = iact.MakeGenericType(et);
           if (iact.IsAssignableFrom(type))
           {
-            method = type.GetMethod("AddChild", new Type[] { et });
+            method = type.GetMethod("AddChild", new[] { et });
             entryType = et;
             return true;
           }
@@ -480,7 +478,7 @@ namespace MediaPortal.UI.SkinEngine.Xaml
       FindImplementedListType(targetType, out resultType, out entryType);
       if (resultType != null)
       {
-        method = entryType == null ? targetType.GetMethod("Add") : targetType.GetMethod("Add", new Type[] { entryType });
+        method = entryType == null ? targetType.GetMethod("Add") : targetType.GetMethod("Add", new[] { entryType });
         // Have to cast to ICollection, because the type converter cannot cope with the situation corretcly if we cast to IEnumerable
         ICollection col = (ICollection) TypeConverter.Convert(value, typeof(ICollection));
         if (col == null)
@@ -488,7 +486,7 @@ namespace MediaPortal.UI.SkinEngine.Xaml
           method.Invoke(maybeCollectionTarget, new object[] { null });
         else
           foreach (object child in col)
-            method.Invoke(maybeCollectionTarget, new object[] { child });
+            method.Invoke(maybeCollectionTarget, new[] { child });
         return true;
       }
       // Check for Dictionary
@@ -501,17 +499,17 @@ namespace MediaPortal.UI.SkinEngine.Xaml
       FindImplementedDictionaryType(value.GetType(), out sourceDictType, out sourceKeyType, out sourceValueType);
       if (resultType != null && sourceDictType != null)
       {
-        PropertyInfo targetItemProperty = keyType == null ? targetType.GetProperty("Item") : targetType.GetProperty("Item", new Type[] { keyType });
+        PropertyInfo targetItemProperty = keyType == null ? targetType.GetProperty("Item") : targetType.GetProperty("Item", new[] { keyType });
         MethodInfo targetItemSetter = targetItemProperty.GetSetMethod();
         foreach (KeyValuePair<object, object> kvp in (IEnumerable)value)
-          targetItemSetter.Invoke(maybeCollectionTarget, new object[] { kvp.Key, kvp.Value });
+          targetItemSetter.Invoke(maybeCollectionTarget, new[] { kvp.Key, kvp.Value });
         return true;
       }
       // Check for IAddChild
       if (IsIAddChild(maybeCollectionTarget.GetType(), out method, out entryType))
       {
         foreach (object child in (ICollection) TypeConverter.Convert(value, typeof(ICollection)))
-          method.Invoke(maybeCollectionTarget, new object[] { TypeConverter.Convert(child, entryType) });
+          method.Invoke(maybeCollectionTarget, new[] { TypeConverter.Convert(child, entryType) });
         return true;
       }
       return false;

@@ -330,7 +330,6 @@ namespace MediaPortal.UI.SkinEngine.Xaml
           {
             // Store other attributes so we don't need to sort out the namespace declarations in step 3
             remainingAttributes.Add(attr);
-            continue;
           }
         }
 

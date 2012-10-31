@@ -103,7 +103,7 @@ namespace MediaPortal.UI.SkinEngine.Xaml
         result = new IndexerDataDescriptor(value, convertedIndices);
         return true;
       }
-      if (ReflectionHelper.ConvertTypes(_indices, new Type[] { typeof(int) },
+      if (ReflectionHelper.ConvertTypes(_indices, new[] { typeof(int) },
           out convertedIndices))
       { // Collection index
         if (!ReflectionHelper.GetEnumerationEntryByIndex(value, (int) convertedIndices[0], out result))
@@ -627,7 +627,7 @@ namespace MediaPortal.UI.SkinEngine.Xaml
         return bracket + 1;
       }
       // Member
-      int end = path.IndexOfAny(new char[] { '.', '[' }, pos);
+      int end = path.IndexOfAny(new[] { '.', '[' }, pos);
       if (end == -1)
         end = path.Length;
       result = new MemberPathSegment(path.Substring(pos, end - pos));

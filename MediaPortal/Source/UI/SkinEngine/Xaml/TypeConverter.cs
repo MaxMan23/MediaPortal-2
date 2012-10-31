@@ -154,14 +154,14 @@ namespace MediaPortal.UI.SkinEngine.Xaml
 
       // Built-in type conversions
 
-      if (val.GetType() == typeof(string) && targetType == typeof(Type))
+      if (val is string && targetType == typeof(Type))
       { // string -> Type
         result = Type.GetType(val.ToString());
         return result != null;
       }
 
       // Enumerations
-      if (val.GetType() == typeof(string) && targetType.IsEnum)
+      if (val is string && targetType.IsEnum)
       { // string -> Enum
         result = Enum.Parse(targetType, (string) val);
         return true;

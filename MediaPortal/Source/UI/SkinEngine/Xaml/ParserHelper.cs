@@ -57,7 +57,7 @@ namespace MediaPortal.UI.SkinEngine.Xaml
     public static object[] ParseIndexExpression(IParserContext context, string expression)
     {
       IList<object> indices = new List<object>();
-      string[] indexStrings = expression.Split(new char[] {','});
+      string[] indexStrings = expression.Split(new[] {','});
       foreach (string s in indexStrings)
       {
         string valStr = s;
