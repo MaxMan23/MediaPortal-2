@@ -71,7 +71,7 @@ namespace MediaPortal.UI.SkinEngine.DirectX
 
     public static readonly VertexFormat Format = VertexFormat.Position | VertexFormat.Texture2 | VertexFormat.Diffuse;
 
-    public static readonly VertexElement[] Declarator = new VertexElement[]
+    public static readonly VertexElement[] Declarator = new[]
       {
         new VertexElement(0, 0, DeclarationType.Float3, DeclarationMethod.Default, DeclarationUsage.Position, 0),
         new VertexElement(0, 12, DeclarationType.Color, DeclarationMethod.Default, DeclarationUsage.Color, 0),

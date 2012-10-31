@@ -229,7 +229,7 @@ namespace MediaPortal.UI.SkinEngine.DirectX
     [DebuggerStepThrough]
     protected void EnumerateDevices(GraphicsAdapterInfo adapterInfo, ICollection<Format> adapterFormatList)
     {
-      DeviceType[] devTypeArray = new DeviceType[] { DeviceType.Hardware, DeviceType.Software, DeviceType.Reference };
+      DeviceType[] devTypeArray = new[] { DeviceType.Hardware, DeviceType.Software, DeviceType.Reference };
 
       foreach (DeviceType devType in devTypeArray)
       {
@@ -263,12 +263,12 @@ namespace MediaPortal.UI.SkinEngine.DirectX
     /// </summary>
     protected void EnumerateDeviceCombos(GraphicsDeviceInfo deviceInfo, ICollection<Format> adapterFormatList)
     {
-      Format[] backBufferFormats = new Format[]
+      Format[] backBufferFormats = new[]
         {
           Format.A8R8G8B8, Format.X8R8G8B8, Format.A2R10G10B10,
-          Format.R5G6B5, Format.A1R5G5B5, Format.X1R5G5B5,
+          Format.R5G6B5, Format.A1R5G5B5, Format.X1R5G5B5
         };
-      bool[] bools = new bool[] { false, true };
+      bool[] bools = new[] { false, true };
 
       // See which adapter formats are supported by this device
       foreach (Format adapterFormat in adapterFormatList)
@@ -331,7 +331,7 @@ namespace MediaPortal.UI.SkinEngine.DirectX
           Format.D24X8,
           Format.D24S8,
           Format.D24X4S4,
-          Format.D32,
+          Format.D32
         };
 
       foreach (Format depthStencilFmt in depthStencilFormatArray)

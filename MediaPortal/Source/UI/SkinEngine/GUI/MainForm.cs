@@ -136,9 +136,9 @@ namespace MediaPortal.UI.SkinEngine.GUI
       Application.Idle += OnApplicationIdle;
       _adaptToSizeEnabled = true;
 
-      _messageQueue = new AsynchronousMessageQueue(this, new string[]
+      _messageQueue = new AsynchronousMessageQueue(this, new[]
         {
-            PlayerManagerMessaging.CHANNEL,
+            PlayerManagerMessaging.CHANNEL
         });
       _messageQueue.MessageReceived += OnMessageReceived;
       _messageQueue.Start();
