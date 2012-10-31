@@ -76,12 +76,10 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
         int offset = i * 3;
         verts[offset].Position = new Vector3(cx, cy, zCoord);
         verts[offset + 1].Position = new Vector3(pathPoints[i].X, pathPoints[i].Y, zCoord);
-        if (i + 1 < pointCount)
-          verts[offset + 2].Position = new Vector3(pathPoints[i + 1].X, pathPoints[i + 1].Y, zCoord);
-        else
-          verts[offset + 2].Position = new Vector3(pathPoints[0].X, pathPoints[0].Y, zCoord);
+        verts[offset + 2].Position = i + 1 < pointCount ? 
+          new Vector3(pathPoints[i + 1].X, pathPoints[i + 1].Y, zCoord) : 
+          new Vector3(pathPoints[0].X, pathPoints[0].Y, zCoord);
       }
-      return;
     }
 
     /// <summary>
@@ -125,7 +123,6 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
       if (close)
         // Last point is the first point to close the shape
         verts[verticeCount - 1].Position = new Vector3(pathPoints[0].X, pathPoints[0].Y, zCoord);
-      return;
     }
 
     static PointF GetNextPoint(PointF[] points, int i, int max)
@@ -223,7 +220,7 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
       int pointsLength = pathPoints.Length;
       List<PositionColoredTextured> vertList = new List<PositionColoredTextured>();
 
-      PointF[] lastLine = new PointF[] { PointF.Empty, PointF.Empty };
+      PointF[] lastLine = new[] { PointF.Empty, PointF.Empty };
       if (close)
         GetLastLine(pathPoints, out lastLine);
 
@@ -280,7 +277,7 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
         vertList.Add(new PositionColoredTextured { Position = new Vector3(movedNext.X, movedNext.Y, zCoord) });
         vertList.Add(new PositionColoredTextured { Position = new Vector3(movedCurrent.X, movedCurrent.Y, zCoord) });
 
-        lastLine = new PointF[] { currentPoint, nextPoint };
+        lastLine = new[] { currentPoint, nextPoint };
       }
       verts = vertList.ToArray();
     }

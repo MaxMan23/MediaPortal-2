@@ -33,8 +33,8 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
   //A point in Coordinate System
   public class CPoint2D
   {
-    private float m_dCoordinate_X;
-    private float m_dCoordinate_Y;
+    private float _dCoordinateX;
+    private float _dCoordinateY;
 
     public CPoint2D()
     {
@@ -43,44 +43,44 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
 
     public CPoint2D(float xCoordinate, float yCoordinate)
     {
-      m_dCoordinate_X = xCoordinate;
-      m_dCoordinate_Y = yCoordinate;
+      _dCoordinateX = xCoordinate;
+      _dCoordinateY = yCoordinate;
     }
 
     public float X
     {
-      get { return m_dCoordinate_X; }
-      set { m_dCoordinate_X = value; }
+      get { return _dCoordinateX; }
+      set { _dCoordinateX = value; }
     }
 
     public float Y
     {
-      get { return m_dCoordinate_Y; }
-      set { m_dCoordinate_Y = value; }
+      get { return _dCoordinateY; }
+      set { _dCoordinateY = value; }
     }
 
-    public static bool SamePoints(CPoint2D Point1, CPoint2D Point2)
+    public static bool SamePoints(CPoint2D point1, CPoint2D point2)
     {
-      float dDiff_X =
-        Math.Abs(Point1.X - Point2.X);
-      float dDiff_Y =
-        Math.Abs(Point1.Y - Point2.Y);
+      float dDiffX =
+        Math.Abs(point1.X - point2.X);
+      float dDiffY =
+        Math.Abs(point1.Y - point2.Y);
 
-      return dDiff_X < ConstantValue.SmallValue && dDiff_Y < ConstantValue.SmallValue;
+      return dDiffX < ConstantValue.SmallValue && dDiffY < ConstantValue.SmallValue;
     }
 
     public bool SamePoint(CPoint2D other)
     {
 
-      float dDeff_X = Math.Abs(m_dCoordinate_X - other.X);
-      float dDeff_Y = Math.Abs(m_dCoordinate_Y - other.Y);
+      float dDeffX = Math.Abs(_dCoordinateX - other.X);
+      float dDeffY = Math.Abs(_dCoordinateY - other.Y);
 
-      return dDeff_X < ConstantValue.SmallValue && dDeff_Y < ConstantValue.SmallValue;
+      return dDeffX < ConstantValue.SmallValue && dDeffY < ConstantValue.SmallValue;
     }
 
     public bool Equals(CPoint2D other)
     {
-      return m_dCoordinate_X == other.m_dCoordinate_X && m_dCoordinate_Y == other.m_dCoordinate_Y;
+      return Math.Abs(_dCoordinateX - other._dCoordinateX) < ConstantValue.SmallValue && Math.Abs(_dCoordinateY - other._dCoordinateY) < ConstantValue.SmallValue;
     }
 
     /***To check whether the point is in a line segment***/
@@ -93,11 +93,11 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
       By = lineSegment.EndPoint.Y;
       Ax = lineSegment.StartPoint.X;
       Ay = lineSegment.StartPoint.Y;
-      Cx = this.m_dCoordinate_X;
-      Cy = this.m_dCoordinate_Y;
+      Cx = _dCoordinateX;
+      Cy = _dCoordinateY;
 
-      float L = lineSegment.GetLineSegmentLength();
-      float s = Math.Abs(((Ay - Cy) * (Bx - Ax) - (Ax - Cx) * (By - Ay)) / (L * L));
+      float l = lineSegment.GetLineSegmentLength();
+      float s = Math.Abs(((Ay - Cy) * (Bx - Ax) - (Ax - Cx) * (By - Ay)) / (l * l));
 
       if (Math.Abs(s - 0) < ConstantValue.SmallValue)
       {
@@ -112,8 +112,7 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
     /*** Distance between two points***/
     public float DistanceTo(CPoint2D point)
     {
-      return (float)Math.Sqrt((point.X - this.X) * (point.X - this.X) + (point.Y - this.Y) * (point.Y - this.Y));
-
+      return (float)Math.Sqrt((point.X - X) * (point.X - X) + (point.Y - Y) * (point.Y - Y));
     }
 
     public bool PointInsidePolygon(CPoint2D[] polygonVertices)
@@ -151,10 +150,7 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
         p1 = p2;
       } //for loop
 
-      if ((nCounter % 2) == 0)
-        return false;
-      else
-        return true;
+      return (nCounter % 2) != 0;
     }
 
     /*********** Sort points from Xmin->Xmax ******/
@@ -199,12 +195,10 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
 
     public static bool operator ==(CPoint2D p1, CPoint2D p2)
     {
-      bool p2null = ReferenceEquals(p2, null);
+      bool p2Null = ReferenceEquals(p2, null);
       if (ReferenceEquals(p1, null))
-        return p2null;
-      if (p2null)
-        return false;
-      return p1.Equals(p2);
+        return p2Null;
+      return !p2Null && p1.Equals(p2);
     }
 
     public static bool operator !=(CPoint2D p1, CPoint2D p2)
@@ -214,7 +208,7 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
 
     public override int GetHashCode()
     {
-      return (int) (m_dCoordinate_X + m_dCoordinate_Y);
+      return (int) (_dCoordinateX + _dCoordinateY);
     }
 
     public override bool Equals(object obj)
@@ -227,7 +221,7 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
 
     public override string ToString()
     {
-      return string.Format("{0};{1}", m_dCoordinate_X, m_dCoordinate_Y);
+      return string.Format("{0};{1}", _dCoordinateX, _dCoordinateY);
     }
   }
 }

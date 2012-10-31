@@ -112,7 +112,7 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
       CPoint2D ptj = this[CorrectIndex(pointIndex - 1)];
       CPoint2D ptk = this[CorrectIndex(pointIndex + 1)];
 
-      float fArea = GetPolygonArea(new CPoint2D[] { ptj, pti, ptk });
+      float fArea = GetPolygonArea(new[] { ptj, pti, ptk });
 
       return fArea > 0 ? VertexType.ConcavePoint : VertexType.ConvexPoint;
     }
@@ -238,7 +238,7 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
           CPoint2D pti = this[CorrectIndex(i - 1)];
           CPoint2D ptj = this[i];
           CPoint2D ptk = this[CorrectIndex(i + 1)];
-          CPolygon ear = new CPolygon(new CPoint2D[] {pti, ptj, ptk}, true);
+          CPolygon ear = new CPolygon(new[] {pti, ptj, ptk}, true);
           RemoveAt(i);
           return ear;
         }

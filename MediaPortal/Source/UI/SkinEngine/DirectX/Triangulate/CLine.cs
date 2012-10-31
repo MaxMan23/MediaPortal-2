@@ -47,9 +47,9 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
   public class CLine
   {
     //line: ax+by+c=0;
-    protected float a;
-    protected float b;
-    protected float c;
+    protected float _a;
+    protected float _b;
+    protected float _c;
 
     private void Initialize(float angleInRad, CPoint2D point)
     {
@@ -60,24 +60,20 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
         //if ((angleInRad<0) ||(angleInRad>Math.PI))
         if (angleInRad > 2 * Math.PI)
         {
-          string errMsg = string.Format("The input line angle" + " {0} is wrong. It should be between 0-2*PI.", angleInRad);
-
-          InvalidInputGeometryDataException ex = new InvalidInputGeometryDataException(errMsg);
-
-          throw ex;
+          throw new InvalidInputGeometryDataException(string.Format("The input line angle" + " {0} is wrong. It should be between 0-2*PI.", angleInRad));
         }
 
         if (Math.Abs(angleInRad - Math.PI / 2) < ConstantValue.SmallValue) //vertical line
         {
-          a = 1;
-          b = 0;
-          c = -point.X;
+          _a = 1;
+          _b = 0;
+          _c = -point.X;
         }
         else //not vertical line
         {
-          a = (float)-Math.Tan(angleInRad);
-          b = 1;
-          c = -a * point.X - b * point.Y;
+          _a = (float) -Math.Tan(angleInRad);
+          _b = 1;
+          _c = -_a * point.X - _b * point.Y;
         }
       }
       catch (Exception e)
@@ -98,15 +94,13 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
       {
         if (CPoint2D.SamePoints(point1, point2))
         {
-          string errMsg = "The input points are the same";
-          InvalidInputGeometryDataException ex = new InvalidInputGeometryDataException(errMsg);
-          throw ex;
+          throw new InvalidInputGeometryDataException("The input points are the same");
         }
 
         //Point1 and Point2 are different points:
         if (Math.Abs(point1.X - point2.X) < ConstantValue.SmallValue) //vertical line
         {
-          Initialize((float)Math.PI / 2, point1);
+          Initialize((float) Math.PI / 2, point1);
         }
         else if (Math.Abs(point1.Y - point2.Y) < ConstantValue.SmallValue) //Horizontal line
         {
@@ -115,7 +109,7 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
         else //normal line
         {
           float m = (point2.Y - point1.Y) / (point2.X - point1.X);
-          float alphaInRad = (float)Math.Atan(m);
+          float alphaInRad = (float) Math.Atan(m);
           Initialize(alphaInRad, point1);
         }
       }
@@ -127,9 +121,9 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
 
     public CLine(CLine copiedLine)
     {
-      this.a = copiedLine.a;
-      this.b = copiedLine.b;
-      this.c = copiedLine.c;
+      _a = copiedLine._a;
+      _b = copiedLine._b;
+      _c = copiedLine._c;
     }
 
     /*** calculate the distance from a given point to the line ***/
@@ -138,8 +132,8 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
       float x0 = point.X;
       float y0 = point.Y;
 
-      float d = (float)Math.Abs(a * x0 + b * y0 + c);
-      d = d / ((float)(Math.Sqrt(a * a + b * b)));
+      float d = Math.Abs(_a * x0 + _b * y0 + _c);
+      d = d / ((float) (Math.Sqrt(_a * _a + _b * _b)));
 
       return d;
     }
@@ -151,10 +145,10 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
       float x;
       try
       {
-        if (Math.Abs(a) < ConstantValue.SmallValue) //a=0;
+        if (Math.Abs(_a) < ConstantValue.SmallValue) //a=0;
           throw new NonValidReturnException();
 
-        x = -(b * y + c) / a;
+        x = -(_b * y + _c) / _a;
       }
       catch (Exception e)  //Horizontal line a=0;
       {
@@ -173,11 +167,11 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
       float y;
       try
       {
-        if (Math.Abs(b) < ConstantValue.SmallValue)
+        if (Math.Abs(_b) < ConstantValue.SmallValue)
         {
           throw new NonValidReturnException();
         }
-        y = -(a * x + c) / b;
+        y = -(_a * x + _c) / _b;
       }
       catch (Exception e)
       {
@@ -191,42 +185,29 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
     /*** is it a vertical line:***/
     public bool VerticalLine()
     {
-      if (Math.Abs(b - 0) < ConstantValue.SmallValue)
-        return true;
-      else
-        return false;
+      return Math.Abs(_b - 0) < ConstantValue.SmallValue;
     }
 
     /*** is it a horizontal line:***/
     public bool HorizontalLine()
     {
-      if (Math.Abs(a - 0) < ConstantValue.SmallValue)
-        return true;
-      else
-        return false;
+      return Math.Abs(_a - 0) < ConstantValue.SmallValue;
     }
 
     /*** calculate line angle in radian: ***/
     public float GetLineAngle()
     {
-      if (b == 0)
+      if (_b == 0)
       {
-        return (float)Math.PI / 2;
+        return (float) Math.PI / 2;
       }
-      else //b!=0
-      {
-        float tanA = -a / b;
-        return (float)Math.Atan(tanA);
-      }
+      float tanA = -_a / _b;
+      return (float) Math.Atan(tanA);
     }
 
     public bool Parallel(CLine line)
     {
-      bool bParallel = false;
-      if (this.a / this.b == line.a / line.b)
-        bParallel = true;
-
-      return bParallel;
+      return Math.Abs(_a / _b - line._a / line._b) < ConstantValue.SmallValue;
     }
 
     /**************************************
@@ -236,15 +217,15 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
     public CPoint2D IntersecctionWith(CLine line)
     {
       CPoint2D point = new CPoint2D();
-      float a1 = this.a;
-      float b1 = this.b;
-      float c1 = this.c;
+      float a1 = _a;
+      float b1 = _b;
+      float c1 = _c;
 
-      float a2 = line.a;
-      float b2 = line.b;
-      float c2 = line.c;
+      float a2 = line._a;
+      float b2 = line._b;
+      float c2 = line._c;
 
-      if (!(this.Parallel(line))) //not parallen
+      if (!(Parallel(line))) //not parallen
       {
         point.X = (c2 * b1 - c1 * b2) / (a1 * b2 - a2 * b1);
         point.Y = (a1 * c2 - c1 * a2) / (a2 * b2 - a1 * b2);
@@ -257,14 +238,14 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
   {
     //line: ax+by+c=0, with start point and end point
     //direction from start point ->end point
-    private CPoint2D m_startPoint;
-    private CPoint2D m_endPoint;
+    private CPoint2D _startPoint;
+    private CPoint2D _endPoint;
 
     public CPoint2D StartPoint
     {
       get
       {
-        return m_startPoint;
+        return _startPoint;
       }
     }
 
@@ -272,32 +253,31 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
     {
       get
       {
-        return m_endPoint;
+        return _endPoint;
       }
     }
 
     public CLineSegment(CPoint2D startPoint, CPoint2D endPoint)
       : base(startPoint, endPoint)
     {
-      this.m_startPoint = startPoint;
-      this.m_endPoint = endPoint;
+      _startPoint = startPoint;
+      _endPoint = endPoint;
     }
 
     /*** chagne the line's direction ***/
     public void ChangeLineDirection()
     {
-      CPoint2D tempPt;
-      tempPt = this.m_startPoint;
-      this.m_startPoint = this.m_endPoint;
-      this.m_endPoint = tempPt;
+      CPoint2D tempPt = _startPoint;
+      _startPoint = _endPoint;
+      _endPoint = tempPt;
     }
 
     /*** To calculate the line segment length:   ***/
     public float GetLineSegmentLength()
     {
-      float d = (m_endPoint.X - m_startPoint.X) * (m_endPoint.X - m_startPoint.X);
-      d += (m_endPoint.Y - m_startPoint.Y) * (m_endPoint.Y - m_startPoint.Y);
-      d = (float)Math.Sqrt(d);
+      float d = (_endPoint.X - _startPoint.X) * (_endPoint.X - _startPoint.X);
+      d += (_endPoint.Y - _startPoint.Y) * (_endPoint.Y - _startPoint.Y);
+      d = (float) Math.Sqrt(d);
 
       return d;
     }
@@ -313,74 +293,69 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
     public int GetPointLocation(CPoint2D point)
     {
       float Ax, Ay, Bx, By, Cx, Cy;
-      Bx = m_endPoint.X;
-      By = m_endPoint.Y;
+      Bx = _endPoint.X;
+      By = _endPoint.Y;
 
-      Ax = m_startPoint.X;
-      Ay = m_startPoint.Y;
+      Ax = _startPoint.X;
+      Ay = _startPoint.Y;
 
       Cx = point.X;
       Cy = point.Y;
 
-      if (this.HorizontalLine())
+      if (HorizontalLine())
       {
         if (Math.Abs(Ay - Cy) < ConstantValue.SmallValue) //equal
           return 0;
-        else if (Ay > Cy)
+        if (Ay > Cy)
           return -1;   //Y Axis points down, point is above the line
-        else //Ay<Cy
-          return 1;    //Y Axis points down, point is below the line
+        //Ay<Cy
+        return 1;    //Y Axis points down, point is below the line
       }
-      else //Not a horizontal line
-      {
-        //make the line direction bottom->up
-        if (m_endPoint.Y > m_startPoint.Y)
-          this.ChangeLineDirection();
+      //Not a horizontal line
+      //make the line direction bottom->up
+      if (_endPoint.Y > _startPoint.Y)
+        ChangeLineDirection();
 
-        float L = this.GetLineSegmentLength();
-        float s = ((Ay - Cy) * (Bx - Ax) - (Ax - Cx) * (By - Ay)) / (L * L);
+      float l = GetLineSegmentLength();
+      float s = ((Ay - Cy) * (Bx - Ax) - (Ax - Cx) * (By - Ay)) / (l * l);
 
-        //Note: the Y axis is pointing down:
-        if (Math.Abs(s - 0) < ConstantValue.SmallValue) //s=0
-          return 0; //point is in the line or line extension
-        else if (s > 0)
-          return -1; //point is left of line or above the horizontal line
-        else //s<0
-          return 1;
-      }
+      //Note: the Y axis is pointing down:
+      if (Math.Abs(s - 0) < ConstantValue.SmallValue) //s=0
+        return 0; //point is in the line or line extension
+      if (s > 0)
+        return -1; //point is left of line or above the horizontal line
+      //s<0
+      return 1;
     }
 
     /***Get the minimum x value of the points in the line***/
     public float GetXmin()
     {
-      return (float)Math.Min(m_startPoint.X, m_endPoint.X);
+      return Math.Min(_startPoint.X, _endPoint.X);
     }
 
     /***Get the maximum  x value of the points in the line***/
     public float GetXmax()
     {
-      return (float)Math.Max(m_startPoint.X, m_endPoint.X);
+      return Math.Max(_startPoint.X, _endPoint.X);
     }
 
     /***Get the minimum y value of the points in the line***/
     public float GetYmin()
     {
-      return (float)Math.Min(m_startPoint.Y, m_endPoint.Y);
+      return Math.Min(_startPoint.Y, _endPoint.Y);
     }
 
     /***Get the maximum y value of the points in the line***/
     public float GetYmax()
     {
-      return (float)Math.Max(m_startPoint.Y, m_endPoint.Y);
+      return Math.Max(_startPoint.Y, _endPoint.Y);
     }
 
     /***Check whether this line is in a longer line***/
     public bool InLine(CLineSegment longerLineSegment)
     {
-      bool bInLine = false;
-      if ((m_startPoint.InLine(longerLineSegment)) && (m_endPoint.InLine(longerLineSegment)))
-        bInLine = true;
-      return bInLine;
+      return _startPoint.InLine(longerLineSegment) && _endPoint.InLine(longerLineSegment);
     }
 
     /************************************************
@@ -398,36 +373,36 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
       CPoint2D newStartPoint = new CPoint2D();
       CPoint2D newEndPoint = new CPoint2D();
 
-      float alphaInRad = this.GetLineAngle(); // 0-PI
+      float alphaInRad = GetLineAngle(); // 0-PI
       if (rightOrDown)
       {
-        if (this.HorizontalLine()) //offset to y+ direction
+        if (HorizontalLine()) //offset to y+ direction
         {
-          newStartPoint.X = this.m_startPoint.X;
-          newStartPoint.Y = this.m_startPoint.Y + distance;
+          newStartPoint.X = _startPoint.X;
+          newStartPoint.Y = _startPoint.Y + distance;
 
-          newEndPoint.X = this.m_endPoint.X;
-          newEndPoint.Y = this.m_endPoint.Y + distance;
+          newEndPoint.X = _endPoint.X;
+          newEndPoint.Y = _endPoint.Y + distance;
           line = new CLineSegment(newStartPoint, newEndPoint);
         }
         else //offset to x+ direction
         {
           if (Math.Sin(alphaInRad) > 0)
           {
-            newStartPoint.X = (float)(m_startPoint.X + Math.Abs(distance * Math.Sin(alphaInRad)));
-            newStartPoint.Y = (float)(m_startPoint.Y - Math.Abs(distance * Math.Cos(alphaInRad)));
+            newStartPoint.X = (float) (_startPoint.X + Math.Abs(distance * Math.Sin(alphaInRad)));
+            newStartPoint.Y = (float) (_startPoint.Y - Math.Abs(distance * Math.Cos(alphaInRad)));
 
-            newEndPoint.X = (float)(m_endPoint.X + Math.Abs(distance * Math.Sin(alphaInRad)));
-            newEndPoint.Y = (float)(m_endPoint.Y - Math.Abs(distance * Math.Cos(alphaInRad)));
+            newEndPoint.X = (float) (_endPoint.X + Math.Abs(distance * Math.Sin(alphaInRad)));
+            newEndPoint.Y = (float) (_endPoint.Y - Math.Abs(distance * Math.Cos(alphaInRad)));
 
             line = new CLineSegment(newStartPoint, newEndPoint);
           }
           else //sin(FalphaInRad)<0
           {
-            newStartPoint.X = (float)(m_startPoint.X + Math.Abs(distance * Math.Sin(alphaInRad)));
-            newStartPoint.Y = (float)(m_startPoint.Y + Math.Abs(distance * Math.Cos(alphaInRad)));
-            newEndPoint.X = (float)(m_endPoint.X + Math.Abs(distance * Math.Sin(alphaInRad)));
-            newEndPoint.Y = (float)(m_endPoint.Y + Math.Abs(distance * Math.Cos(alphaInRad)));
+            newStartPoint.X = (float) (_startPoint.X + Math.Abs(distance * Math.Sin(alphaInRad)));
+            newStartPoint.Y = (float) (_startPoint.Y + Math.Abs(distance * Math.Cos(alphaInRad)));
+            newEndPoint.X = (float) (_endPoint.X + Math.Abs(distance * Math.Sin(alphaInRad)));
+            newEndPoint.Y = (float) (_endPoint.Y + Math.Abs(distance * Math.Cos(alphaInRad)));
 
             line = new CLineSegment(newStartPoint, newEndPoint);
           }
@@ -435,33 +410,33 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
       }//{rightOrDown}
       else //leftOrUp
       {
-        if (this.HorizontalLine()) //offset to y directin
+        if (HorizontalLine()) //offset to y directin
         {
-          newStartPoint.X = m_startPoint.X;
-          newStartPoint.Y = m_startPoint.Y - distance;
+          newStartPoint.X = _startPoint.X;
+          newStartPoint.Y = _startPoint.Y - distance;
 
-          newEndPoint.X = m_endPoint.X;
-          newEndPoint.Y = m_endPoint.Y - distance;
+          newEndPoint.X = _endPoint.X;
+          newEndPoint.Y = _endPoint.Y - distance;
           line = new CLineSegment(newStartPoint, newEndPoint);
         }
         else //offset to x directin
         {
           if (Math.Sin(alphaInRad) >= 0)
           {
-            newStartPoint.X = (float)(m_startPoint.X - Math.Abs(distance * Math.Sin(alphaInRad)));
-            newStartPoint.Y = (float)(m_startPoint.Y + Math.Abs(distance * Math.Cos(alphaInRad)));
-            newEndPoint.X = (float)(m_endPoint.X - Math.Abs(distance * Math.Sin(alphaInRad)));
-            newEndPoint.Y = (float)(m_endPoint.Y + Math.Abs(distance * Math.Cos(alphaInRad)));
+            newStartPoint.X = (float) (_startPoint.X - Math.Abs(distance * Math.Sin(alphaInRad)));
+            newStartPoint.Y = (float) (_startPoint.Y + Math.Abs(distance * Math.Cos(alphaInRad)));
+            newEndPoint.X = (float) (_endPoint.X - Math.Abs(distance * Math.Sin(alphaInRad)));
+            newEndPoint.Y = (float) (_endPoint.Y + Math.Abs(distance * Math.Cos(alphaInRad)));
 
             line = new CLineSegment(
               newStartPoint, newEndPoint);
           }
           else //sin(FalphaInRad)<0
           {
-            newStartPoint.X = (float)(m_startPoint.X - Math.Abs(distance * Math.Sin(alphaInRad)));
-            newStartPoint.Y = (float)(m_startPoint.Y - Math.Abs(distance * Math.Cos(alphaInRad)));
-            newEndPoint.X = (float)(m_endPoint.X - Math.Abs(distance * Math.Sin(alphaInRad)));
-            newEndPoint.Y = (float)(m_endPoint.Y - Math.Abs(distance * Math.Cos(alphaInRad)));
+            newStartPoint.X = (float) (_startPoint.X - Math.Abs(distance * Math.Sin(alphaInRad)));
+            newStartPoint.Y = (float) (_startPoint.Y - Math.Abs(distance * Math.Cos(alphaInRad)));
+            newEndPoint.X = (float) (_endPoint.X - Math.Abs(distance * Math.Sin(alphaInRad)));
+            newEndPoint.Y = (float) (_endPoint.Y - Math.Abs(distance * Math.Cos(alphaInRad)));
 
             line = new CLineSegment(newStartPoint, newEndPoint);
           }
@@ -475,14 +450,14 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
     *********************************************************/
     public bool IntersectedWith(CLineSegment line)
     {
-      float x1 = this.m_startPoint.X;
-      float y1 = this.m_startPoint.Y;
-      float x2 = this.m_endPoint.X;
-      float y2 = this.m_endPoint.Y;
-      float x3 = line.m_startPoint.X;
-      float y3 = line.m_startPoint.Y;
-      float x4 = line.m_endPoint.X;
-      float y4 = line.m_endPoint.Y;
+      float x1 = _startPoint.X;
+      float y1 = _startPoint.Y;
+      float x2 = _endPoint.X;
+      float y2 = _endPoint.Y;
+      float x3 = line._startPoint.X;
+      float y3 = line._startPoint.Y;
+      float x4 = line._endPoint.X;
+      float y4 = line._endPoint.Y;
 
       float de = (y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1);
       //if de<>0 then //lines are not parallel
@@ -491,14 +466,10 @@ namespace MediaPortal.UI.SkinEngine.DirectX.Triangulate
         float ua = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / de;
         float ub = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / de;
 
-        if ((ua > 0) && (ua < 1) && (ub > 0) && (ub < 1))
-          return true;
-        else
-          return false;
+        return (ua > 0) && (ua < 1) && (ub > 0) && (ub < 1);
       }
-      else	//lines are parallel
-        return false;
+      //lines are parallel
+      return false;
     }
-
   }
 }
