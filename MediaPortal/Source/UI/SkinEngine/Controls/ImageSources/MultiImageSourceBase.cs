@@ -278,7 +278,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.ImageSources
         return;
 
       // Get a list of transitions to use
-      string[] transitions = Transition.Split(new char[] {';'}, StringSplitOptions.RemoveEmptyEntries);
+      string[] transitions = Transition.Split(new[] {';'}, StringSplitOptions.RemoveEmptyEntries);
       if (transitions.Length == 0)
         return;
       // Choose a random transition

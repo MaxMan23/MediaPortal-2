@@ -250,9 +250,9 @@ namespace MediaPortal.UI.SkinEngine.Controls.Visuals
     {
       if (_messageQueue != null)
         return;
-      _messageQueue = new AsynchronousMessageQueue(this, new string[]
+      _messageQueue = new AsynchronousMessageQueue(this, new[]
         {
-            LocalizationMessaging.CHANNEL,
+            LocalizationMessaging.CHANNEL
         });
       _messageQueue.MessageReceived += OnMessageReceived;
       _messageQueue.Start();

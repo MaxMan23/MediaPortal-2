@@ -175,7 +175,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.Panels
     /// <paramref name="targetObject"/>.</returns>
     public static int GetRow(DependencyObject targetObject)
     {
-      return targetObject.GetAttachedPropertyValue<int>(ROW_ATTACHED_PROPERTY, 0);
+      return targetObject.GetAttachedPropertyValue(ROW_ATTACHED_PROPERTY, 0);
     }
 
     /// <summary>
@@ -184,10 +184,10 @@ namespace MediaPortal.UI.SkinEngine.Controls.Panels
     /// <param name="targetObject">The object whose property value will
     /// be set.</param>
     /// <param name="value">Value of the <c>Row</c> property on the
-    /// <paramref name="targetObject"/> to be set.</returns>
+    /// <paramref name="targetObject"/> to be set.</param>
     public static void SetRow(DependencyObject targetObject, int value)
     {
-      targetObject.SetAttachedPropertyValue<int>(ROW_ATTACHED_PROPERTY, value);
+      targetObject.SetAttachedPropertyValue(ROW_ATTACHED_PROPERTY, value);
     }
 
     /// <summary>
@@ -201,7 +201,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.Panels
     /// <returns>Attached <c>Row</c> property.</returns>
     public static AbstractProperty GetRowAttachedProperty(DependencyObject targetObject)
     {
-      return targetObject.GetOrCreateAttachedProperty<int>(ROW_ATTACHED_PROPERTY, 0);
+      return targetObject.GetOrCreateAttachedProperty(ROW_ATTACHED_PROPERTY, 0);
     }
 
     /// <summary>
@@ -222,10 +222,10 @@ namespace MediaPortal.UI.SkinEngine.Controls.Panels
     /// <param name="targetObject">The object whose property value will
     /// be set.</param>
     /// <param name="value">Value of the <c>Column</c> property on the
-    /// <paramref name="targetObject"/> to be set.</returns>
+    /// <paramref name="targetObject"/> to be set.</param>
     public static void SetColumn(DependencyObject targetObject, int value)
     {
-      targetObject.SetAttachedPropertyValue<int>(COLUMN_ATTACHED_PROPERTY, value);
+      targetObject.SetAttachedPropertyValue(COLUMN_ATTACHED_PROPERTY, value);
     }
 
     /// <summary>
@@ -239,7 +239,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.Panels
     /// <returns>Attached <c>Column</c> property.</returns>
     public static AbstractProperty GetColumnAttachedProperty(DependencyObject targetObject)
     {
-      return targetObject.GetOrCreateAttachedProperty<int>(COLUMN_ATTACHED_PROPERTY, 0);
+      return targetObject.GetOrCreateAttachedProperty(COLUMN_ATTACHED_PROPERTY, 0);
     }
 
     /// <summary>
@@ -260,10 +260,10 @@ namespace MediaPortal.UI.SkinEngine.Controls.Panels
     /// <param name="targetObject">The object whose property value will
     /// be set.</param>
     /// <param name="value">Value of the <c>RowSpan</c> property on the
-    /// <paramref name="targetObject"/> to be set.</returns>
+    /// <paramref name="targetObject"/> to be set.</param>
     public static void SetRowSpan(DependencyObject targetObject, int value)
     {
-      targetObject.SetAttachedPropertyValue<int>(ROWSPAN_ATTACHED_PROPERTY, value);
+      targetObject.SetAttachedPropertyValue(ROWSPAN_ATTACHED_PROPERTY, value);
     }
 
     /// <summary>
@@ -277,7 +277,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.Panels
     /// <returns>Attached <c>RowSpan</c> property.</returns>
     public static AbstractProperty GetRowSpanAttachedProperty(DependencyObject targetObject)
     {
-      return targetObject.GetOrCreateAttachedProperty<int>(ROWSPAN_ATTACHED_PROPERTY, 0);
+      return targetObject.GetOrCreateAttachedProperty(ROWSPAN_ATTACHED_PROPERTY, 0);
     }
 
     /// <summary>
@@ -298,10 +298,10 @@ namespace MediaPortal.UI.SkinEngine.Controls.Panels
     /// <param name="targetObject">The object whose property value will
     /// be set.</param>
     /// <param name="value">Value of the <c>ColumnSpan</c> property on the
-    /// <paramref name="targetObject"/> to be set.</returns>
+    /// <paramref name="targetObject"/> to be set.</param>
     public static void SetColumnSpan(DependencyObject targetObject, int value)
     {
-      targetObject.SetAttachedPropertyValue<int>(COLUMNSPAN_ATTACHED_PROPERTY, value);
+      targetObject.SetAttachedPropertyValue(COLUMNSPAN_ATTACHED_PROPERTY, value);
     }
 
     /// <summary>
@@ -315,7 +315,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.Panels
     /// <returns>Attached <c>ColumnSpan</c> property.</returns>
     public static AbstractProperty GetColumnSpanAttachedProperty(DependencyObject targetObject)
     {
-      return targetObject.GetOrCreateAttachedProperty<int>(COLUMNSPAN_ATTACHED_PROPERTY, 0);
+      return targetObject.GetOrCreateAttachedProperty(COLUMNSPAN_ATTACHED_PROPERTY, 0);
     }
 
     #endregion

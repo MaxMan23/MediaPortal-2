@@ -55,7 +55,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.Animations
     /// <paramref name="targetObject"/> to be set.</param>
     public static void SetTargetName(DependencyObject targetObject, string value)
     {
-      targetObject.SetAttachedPropertyValue<string>(TARGET_NAME_ATTACHED_PROPERTY, value);
+      targetObject.SetAttachedPropertyValue(TARGET_NAME_ATTACHED_PROPERTY, value);
     }
 
     /// <summary>
@@ -93,7 +93,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.Animations
     /// <paramref name="targetObject"/> to be set.</param>
     public static void SetTargetProperty(DependencyObject targetObject, string value)
     {
-      targetObject.SetAttachedPropertyValue<string>(TARGET_PROPERTY_ATTACHED_PROPERTY, value);
+      targetObject.SetAttachedPropertyValue(TARGET_PROPERTY_ATTACHED_PROPERTY, value);
     }
 
     /// <summary>

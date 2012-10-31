@@ -89,7 +89,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.Visuals
         CELLPHONE_LAYOUT_UPPER,
       };
 
-    public static string[] KEYBOARD_LAYOUT_NAMES = new string[] {LOWER_LAYOUT_NAME, UPPER_LAYOUT_NAME};
+    public static string[] KEYBOARD_LAYOUT_NAMES = new[] {LOWER_LAYOUT_NAME, UPPER_LAYOUT_NAME};
 
     #endregion
 

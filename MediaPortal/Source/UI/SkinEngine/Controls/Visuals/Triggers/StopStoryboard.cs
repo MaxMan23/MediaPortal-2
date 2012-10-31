@@ -27,12 +27,6 @@ namespace MediaPortal.UI.SkinEngine.Controls.Visuals.Triggers
 {
   public class StopStoryboard : StoryboardContinuationTrigger
   {
-    #region Ctor
-
-    public StopStoryboard() { }
-
-    #endregion
-
     public override void Execute(UIElement element)
     {
       BeginStoryboard beginStoryboard = FindStoryboard(element);

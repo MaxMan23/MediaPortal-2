@@ -32,8 +32,8 @@ namespace MediaPortal.UI.SkinEngine.Controls.Transforms
   {
     #region Protected fields
 
-    protected AbstractProperty _XProperty;
-    protected AbstractProperty _YProperty;
+    protected AbstractProperty _xProperty;
+    protected AbstractProperty _yProperty;
 
     #endregion
 
@@ -53,20 +53,20 @@ namespace MediaPortal.UI.SkinEngine.Controls.Transforms
 
     void Init()
     {
-      _XProperty = new SProperty(typeof(double), 0.0);
-      _YProperty = new SProperty(typeof(double), 0.0);
+      _xProperty = new SProperty(typeof(double), 0.0);
+      _yProperty = new SProperty(typeof(double), 0.0);
     }
 
     void Attach()
     {
-      _YProperty.Attach(OnPropertyChanged);
-      _XProperty.Attach(OnPropertyChanged);
+      _yProperty.Attach(OnPropertyChanged);
+      _xProperty.Attach(OnPropertyChanged);
     }
 
     void Detach()
     {
-      _YProperty.Detach(OnPropertyChanged);
-      _XProperty.Detach(OnPropertyChanged);
+      _yProperty.Detach(OnPropertyChanged);
+      _xProperty.Detach(OnPropertyChanged);
     }
 
     public override void DeepCopy(IDeepCopyable source, ICopyManager copyManager)
@@ -89,24 +89,24 @@ namespace MediaPortal.UI.SkinEngine.Controls.Transforms
 
     public AbstractProperty XProperty
     {
-      get { return _XProperty; }
+      get { return _xProperty; }
     }
 
     public double X
     {
-      get { return (double) _XProperty.GetValue(); }
-      set { _XProperty.SetValue(value); }
+      get { return (double) _xProperty.GetValue(); }
+      set { _xProperty.SetValue(value); }
     }
 
     public AbstractProperty YProperty
     {
-      get { return _YProperty; }
+      get { return _yProperty; }
     }
 
     public double Y
     {
-      get { return (double) _YProperty.GetValue(); }
-      set { _YProperty.SetValue(value); }
+      get { return (double) _yProperty.GetValue(); }
+      set { _yProperty.SetValue(value); }
     }
 
     public override void UpdateTransform()

@@ -59,9 +59,9 @@ namespace MediaPortal.UI.SkinEngine.Controls.Brushes
     protected AbstractProperty _startPointProperty;
     protected AbstractProperty _endPointProperty;
     protected GradientBrushTexture _gradientBrushTexture;
-    protected float[] g_startpoint;
-    protected float[] g_endpoint;
-    protected float[] g_framesize;
+    protected float[] _startpoint;
+    protected float[] _endpoint;
+    protected float[] _framesize;
     protected volatile bool _refresh = false;
 
     #endregion
@@ -166,31 +166,31 @@ namespace MediaPortal.UI.SkinEngine.Controls.Brushes
         _refresh = false;
         _effect = ContentManager.Instance.GetEffect(EFFECT_LINEARGRADIENT);
 
-        g_startpoint = new float[] {StartPoint.X, StartPoint.Y};
-        g_endpoint = new float[] {EndPoint.X, EndPoint.Y};
+        _startpoint = new[] { StartPoint.X, StartPoint.Y };
+        _endpoint = new[] { EndPoint.X, EndPoint.Y };
         if (MappingMode == BrushMappingMode.Absolute)
         {
-          g_startpoint[0] /= _vertsBounds.Width;
-          g_startpoint[1] /= _vertsBounds.Height;
+          _startpoint[0] /= _vertsBounds.Width;
+          _startpoint[1] /= _vertsBounds.Height;
 
-          g_endpoint[0] /= _vertsBounds.Width;
-          g_endpoint[1] /= _vertsBounds.Height;
+          _endpoint[0] /= _vertsBounds.Width;
+          _endpoint[1] /= _vertsBounds.Height;
         }
-        g_framesize = new float[] {_vertsBounds.Width, _vertsBounds.Height};
+        _framesize = new[] { _vertsBounds.Width, _vertsBounds.Height };
 
         if (RelativeTransform != null)
         {
           Matrix m = RelativeTransform.GetTransform();
-          m.Transform(ref g_startpoint[0], ref g_startpoint[1]);
-          m.Transform(ref g_endpoint[0], ref g_endpoint[1]);
+          m.Transform(ref _startpoint[0], ref _startpoint[1]);
+          m.Transform(ref _endpoint[0], ref _endpoint[1]);
         }
       }
 
-      _effect.Parameters[PARAM_FRAMESIZE] = g_framesize;
+      _effect.Parameters[PARAM_FRAMESIZE] = _framesize;
       _effect.Parameters[PARAM_TRANSFORM] = GetCachedFinalBrushTransform();
       _effect.Parameters[PARAM_OPACITY] = (float) (Opacity * renderContext.Opacity);
-      _effect.Parameters[PARAM_STARTPOINT] = g_startpoint;
-      _effect.Parameters[PARAM_ENDPOINT] = g_endpoint;
+      _effect.Parameters[PARAM_STARTPOINT] = _startpoint;
+      _effect.Parameters[PARAM_ENDPOINT] = _endpoint;
 
       GraphicsDevice.Device.SetSamplerState(0, SamplerState.AddressU, SpreadAddressMode);
       _effect.StartRender(_gradientBrushTexture.Texture, finalTransform);
@@ -212,37 +212,37 @@ namespace MediaPortal.UI.SkinEngine.Controls.Brushes
         _refresh = false;
         _effect = ContentManager.Instance.GetEffect(EFFECT_LINEAROPACITYGRADIENT);
 
-        g_startpoint = new float[] {StartPoint.X, StartPoint.Y};
-        g_endpoint = new float[] {EndPoint.X, EndPoint.Y};
+        _startpoint = new[] { StartPoint.X, StartPoint.Y };
+        _endpoint = new[] { EndPoint.X, EndPoint.Y };
         if (MappingMode == BrushMappingMode.Absolute)
         {
-          g_startpoint[0] /= _vertsBounds.Width;
-          g_startpoint[1] /= _vertsBounds.Height;
+          _startpoint[0] /= _vertsBounds.Width;
+          _startpoint[1] /= _vertsBounds.Height;
 
-          g_endpoint[0] /= _vertsBounds.Width;
-          g_endpoint[1] /= _vertsBounds.Height;
+          _endpoint[0] /= _vertsBounds.Width;
+          _endpoint[1] /= _vertsBounds.Height;
         }
-        g_framesize = new float[] {_vertsBounds.Width, _vertsBounds.Height};
+        _framesize = new[] { _vertsBounds.Width, _vertsBounds.Height };
 
         if (RelativeTransform != null)
         {
           Matrix m = RelativeTransform.GetTransform();
-          m.Transform(ref g_startpoint[0], ref g_startpoint[1]);
-          m.Transform(ref g_endpoint[0], ref g_endpoint[1]);
+          m.Transform(ref _startpoint[0], ref _startpoint[1]);
+          m.Transform(ref _endpoint[0], ref _endpoint[1]);
         }
       }
       SurfaceDescription desc = tex.GetLevelDescription(0);
-      float[] g_LowerVertsBounds = new float[] {_vertsBounds.Left / desc.Width, _vertsBounds.Top / desc.Height};
-      float[] g_UpperVertsBounds = new float[] {_vertsBounds.Right / desc.Width, _vertsBounds.Bottom / desc.Height};
+      float[] lowerVertsBounds = new[] { _vertsBounds.Left / desc.Width, _vertsBounds.Top / desc.Height };
+      float[] upperVertsBounds = new[] { _vertsBounds.Right / desc.Width, _vertsBounds.Bottom / desc.Height };
 
       _effect.Parameters[PARAM_TRANSFORM] = GetCachedFinalBrushTransform();
       _effect.Parameters[PARAM_OPACITY] = (float) (Opacity * renderContext.Opacity);
-      _effect.Parameters[PARAM_STARTPOINT] = g_startpoint;
-      _effect.Parameters[PARAM_ENDPOINT] = g_endpoint;
-      _effect.Parameters[PARAM_FRAMESIZE] = g_framesize;
+      _effect.Parameters[PARAM_STARTPOINT] = _startpoint;
+      _effect.Parameters[PARAM_ENDPOINT] = _endpoint;
+      _effect.Parameters[PARAM_FRAMESIZE] = _framesize;
       _effect.Parameters[PARAM_ALPHATEX] = _gradientBrushTexture.Texture;
-      _effect.Parameters[PARAM_UPPERVERTSBOUNDS] = g_UpperVertsBounds;
-      _effect.Parameters[PARAM_LOWERVERTSBOUNDS] = g_LowerVertsBounds;
+      _effect.Parameters[PARAM_UPPERVERTSBOUNDS] = upperVertsBounds;
+      _effect.Parameters[PARAM_LOWERVERTSBOUNDS] = lowerVertsBounds;
 
       GraphicsDevice.Device.SetSamplerState(0, SamplerState.AddressU, SpreadAddressMode);
       _effect.StartRender(tex, finalTransform);

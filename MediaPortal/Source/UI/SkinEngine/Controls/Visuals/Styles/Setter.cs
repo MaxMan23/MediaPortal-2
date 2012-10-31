@@ -177,7 +177,6 @@ namespace MediaPortal.UI.SkinEngine.Controls.Visuals.Styles
         // Value is not compatible: We cannot execute
         ServiceRegistration.Get<ILogger>().Warn("Setter for property '{0}': Cannot convert value {1} to target type {2}", _propertyName,
             value == null ? "'null'" : ("of type " + value.GetType().Name), dd.DataType.Name);
-        return;
       }
     }
 

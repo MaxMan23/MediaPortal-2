@@ -172,7 +172,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.Visuals.Shapes
         string pointsStr = match.Value.Substring(1).Trim();
         if (pointsStr.Length > 0)
         {
-          string[] txtpoints = pointsStr.Split(new char[] { ',', ' ' });
+          string[] txtpoints = pointsStr.Split(new[] { ',', ' ' });
           if (txtpoints.Length == 1)
           {
             points = new PointF[1];

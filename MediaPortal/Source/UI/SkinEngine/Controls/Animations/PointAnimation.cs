@@ -134,8 +134,8 @@ namespace MediaPortal.UI.SkinEngine.Controls.Animations
       PropertyAnimationTimelineContext patc = (PropertyAnimationTimelineContext) context;
       if (patc.DataDescriptor == null) return new Vector2(0, 0);
       object o = patc.DataDescriptor.Value;
-      if (o.GetType() == typeof(Vector2)) return (Vector2) o;
-      if (o.GetType() == typeof(Vector3))
+      if (o is Vector2) return (Vector2) o;
+      if (o is Vector3)
       {
         Vector3 v = (Vector3) o;
         return new Vector2(v.X, v.Y);
@@ -149,16 +149,15 @@ namespace MediaPortal.UI.SkinEngine.Controls.Animations
       PropertyAnimationTimelineContext patc = (PropertyAnimationTimelineContext) context;
       if (patc.DataDescriptor == null) return;
       object o = patc.DataDescriptor.Value;
-      if (o.GetType() == typeof(Vector2))
+      if (o is Vector2)
       {
         patc.DataDescriptor.Value = vector;
         return;
       }
-      if (o.GetType() == typeof(Vector3))
+      if (o is Vector3)
       {
         Vector3 v = new Vector3(vector.X, vector.Y, ((Vector3)o).Z);
         patc.DataDescriptor.Value = v;
-        return;
       }
     }
 

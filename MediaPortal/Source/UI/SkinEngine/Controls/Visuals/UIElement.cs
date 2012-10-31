@@ -1025,7 +1025,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.Visuals
 
     public UIElement FindElement_BreadthFirst(IMatcher matcher)
     {
-      LinkedList<UIElement> searchList = new LinkedList<UIElement>(new UIElement[] { this });
+      LinkedList<UIElement> searchList = new LinkedList<UIElement>(new[] { this });
       LinkedListNode<UIElement> current;
       while ((current = searchList.First) != null)
       {
@@ -1047,7 +1047,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.Visuals
 
     public void ForEachElementInTree_BreadthFirst(IUIElementAction action)
     {
-      LinkedList<UIElement> searchList = new LinkedList<UIElement>(new UIElement[] { this });
+      LinkedList<UIElement> searchList = new LinkedList<UIElement>(new[] { this });
       LinkedListNode<UIElement> current;
       while ((current = searchList.First) != null)
       {

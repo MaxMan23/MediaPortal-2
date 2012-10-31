@@ -164,7 +164,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.Panels
     /// <paramref name="targetObject"/> to be set.</param>
     public static void SetLeft(DependencyObject targetObject, double value)
     {
-      targetObject.SetAttachedPropertyValue<double>(LEFT_ATTACHED_PROPERTY, value);
+      targetObject.SetAttachedPropertyValue(LEFT_ATTACHED_PROPERTY, value);
     }
 
     /// <summary>
@@ -250,7 +250,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.Panels
     /// <paramref name="targetObject"/> to be set.</param>
     public static void SetTop(DependencyObject targetObject, double value)
     {
-      targetObject.SetAttachedPropertyValue<double>(TOP_ATTACHED_PROPERTY, value);
+      targetObject.SetAttachedPropertyValue(TOP_ATTACHED_PROPERTY, value);
     }
 
     /// <summary>
@@ -293,7 +293,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.Panels
     /// <paramref name="targetObject"/> to be set.</param>
     public static void SetBottom(DependencyObject targetObject, double value)
     {
-      targetObject.SetAttachedPropertyValue<double>(BOTTOM_ATTACHED_PROPERTY, value);
+      targetObject.SetAttachedPropertyValue(BOTTOM_ATTACHED_PROPERTY, value);
     }
 
     /// <summary>

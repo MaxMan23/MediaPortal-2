@@ -455,7 +455,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.Visuals
     {
       ICommandStencil commandStencil = SelectionChanged;
       if (commandStencil != null)
-        commandStencil.Execute(new object[] { newCurrentItem });
+        commandStencil.Execute(new[] { newCurrentItem });
     }
 
     public void UpdateSelectedItem(ISelectableItemContainer container)

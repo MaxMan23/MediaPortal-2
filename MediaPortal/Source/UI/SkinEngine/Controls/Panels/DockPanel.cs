@@ -272,7 +272,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.Panels
     /// <paramref name="targetObject"/> to be set.</param>
     public static void SetDock(DependencyObject targetObject, Dock value)
     {
-      targetObject.SetAttachedPropertyValue<Dock>(DOCK_ATTACHED_PROPERTY, value);
+      targetObject.SetAttachedPropertyValue(DOCK_ATTACHED_PROPERTY, value);
     }
 
     /// <summary>

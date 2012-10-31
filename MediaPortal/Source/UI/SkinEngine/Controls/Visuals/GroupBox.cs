@@ -150,7 +150,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.Visuals
       Thickness result = base.GetTotalEnclosingMargin();
       float halfLabel = _headerLabel.DesiredSize.Height/2;
       float halfThickness = (float) BorderThickness/2;
-      result.Top = (float) (Math.Max(GetBorderCornerInsetY() - halfThickness, halfLabel) + Math.Max(halfThickness, halfLabel));
+      result.Top = Math.Max(GetBorderCornerInsetY() - halfThickness, halfLabel) + Math.Max(halfThickness, halfLabel);
       return result;
     }
 
@@ -168,7 +168,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.Visuals
       float headerLabelHeight = _headerLabel.DesiredSize.Height;
       float halfLabelHeight = headerLabelHeight/2;
       float halfThickness = (float) BorderThickness/2;
-      float insetY = (float) Math.Max(halfThickness, halfLabelHeight) - halfThickness;
+      float insetY = Math.Max(halfThickness, halfLabelHeight) - halfThickness;
       RectangleF borderRect = new RectangleF(finalRect.X, finalRect.Y + insetY,
           finalRect.Width, finalRect.Height - insetY);
       base.ArrangeBorder(borderRect);

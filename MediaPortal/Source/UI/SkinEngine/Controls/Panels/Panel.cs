@@ -456,7 +456,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.Panels
     /// <paramref name="targetObject"/> to be set.</param>
     public static void SetZIndex(DependencyObject targetObject, double value)
     {
-      targetObject.SetAttachedPropertyValue<double>(ZINDEX_ATTACHED_PROPERTY, value);
+      targetObject.SetAttachedPropertyValue(ZINDEX_ATTACHED_PROPERTY, value);
       // The parent will automatically attach to the ZIndex-Property when it updates its render order
       TryScheduleUpdateParentsRenderOrder(targetObject);
     }
