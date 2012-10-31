@@ -77,12 +77,12 @@ namespace MediaPortal.UI.SkinEngine.ContentManagement
       /// <summary>
       /// This core object holds the actual (unmanaged) resource handle, and is only used internally in the ContentManager
       /// </summary>
-      public IAssetCore core;
+      public IAssetCore Core;
 
       /// <summary>
       /// The asset member is a <see cref="WeakReference"/> to the asset wrapper that is used by client classes.
       /// </summary>
-      public WeakReference asset;
+      public WeakReference Asset;
     }
 
     #endregion
@@ -134,9 +134,9 @@ namespace MediaPortal.UI.SkinEngine.ContentManagement
 
     private ContentManager()
     {
-      int asset_count = Enum.GetNames(typeof(AssetType)).Length;
-      _assets = new Dictionary<string, AssetInstance>[asset_count];
-      for (int i = 0; i < asset_count; ++i)
+      int assetCount = Enum.GetNames(typeof(AssetType)).Length;
+      _assets = new Dictionary<string, AssetInstance>[assetCount];
+      for (int i = 0; i < assetCount; ++i)
         _assets[i] = new Dictionary<string, AssetInstance>();
 
       _garbageCollectorThread = new Thread(DoGarbageCollection)
@@ -323,37 +323,37 @@ namespace MediaPortal.UI.SkinEngine.ContentManagement
         (SkinContext.FrameRenderingStartTime - _timerA).TotalSeconds > _nextCleanupInterval)
       {
         // Choose limits based on allocation threshhold
-        int dealloc_limit = LOW_DEALLOCATION_LIMIT;
-        int scan_limit = LOW_SCAN_LIMIT; 
+        int deallocLimit = LOW_DEALLOCATION_LIMIT;
+        int scanLimit = LOW_SCAN_LIMIT; 
         if (_totalAllocation > HIGH_CLEANUP_THRESHOLD)
         {
-          dealloc_limit = HIGH_DEALLOCATION_LIMIT;
-          scan_limit = HIGH_SCAN_LIMIT; 
+          deallocLimit = HIGH_DEALLOCATION_LIMIT;
+          scanLimit = HIGH_SCAN_LIMIT; 
         }
         // Loop though assets types until scan limit or deallocation limit is reached
         // This algorthim could use improvement
-        int dealloc_remaining = dealloc_limit;
+        int deallocRemaining = deallocLimit;
         int type = _lastCleanedAssetType;
         while (type < _assets.Length) 
         {
           lock (_assets[type])
           {
-            dealloc_remaining -= Free(_assets[type], true, dealloc_remaining);
-            scan_limit -= _assets[type].Count;
+            deallocRemaining -= Free(_assets[type], true, deallocRemaining);
+            scanLimit -= _assets[type].Count;
           }
 
           ++type;
           if (type >= _assets.Length)
             type = 0;
-          if (dealloc_remaining <= 0 || scan_limit <= 0 || type == _lastCleanedAssetType)
+          if (deallocRemaining <= 0 || scanLimit <= 0 || type == _lastCleanedAssetType)
             break;
         }
         _lastCleanedAssetType = type;
-        _nextCleanupInterval = (dealloc_remaining > 0) ? LONG_CLEANUP_INTERVAL : SHORT_CLEANUP_INTERVAL;
+        _nextCleanupInterval = (deallocRemaining > 0) ? LONG_CLEANUP_INTERVAL : SHORT_CLEANUP_INTERVAL;
 
         _timerA = SkinContext.FrameRenderingStartTime;
 
-        ServiceRegistration.Get<ILogger>().Debug("ContentManager: {0} resources deallocated, next cleanup in {1} seconds. {2}/{3} MB", dealloc_limit - dealloc_remaining, _nextCleanupInterval, _totalAllocation / (1024.0 * 1024.0), HIGH_CLEANUP_THRESHOLD / (1024.0 * 1024.0));
+        ServiceRegistration.Get<ILogger>().Debug("ContentManager: {0} resources deallocated, next cleanup in {1} seconds. {2}/{3} MB", deallocLimit - deallocRemaining, _nextCleanupInterval, _totalAllocation / (1024.0 * 1024.0), HIGH_CLEANUP_THRESHOLD / (1024.0 * 1024.0));
       }
 
       if ((SkinContext.FrameRenderingStartTime - _timerB).TotalSeconds > 60.0) 
@@ -427,15 +427,15 @@ namespace MediaPortal.UI.SkinEngine.ContentManagement
       lock (assetTypeDict)
       {
         if (assetTypeDict.TryGetValue(key, out assetInstance))
-          result = assetInstance.asset.Target as IAsset;
+          result = assetInstance.Asset.Target as IAsset;
         else
           assetInstance = NewAssetInstance(key, type, createAssetCore());
         
         // If the asset instance was just created, create asset wrapper. If the asset wrapper has been garbage collected, re-allocate it.
         if (result == null)
         {
-          result = createAsset(assetInstance.core);
-          assetInstance.asset = new WeakReference(result);
+          result = createAsset(assetInstance.Core);
+          assetInstance.Asset = new WeakReference(result);
         }
       }
       return result;
@@ -443,7 +443,7 @@ namespace MediaPortal.UI.SkinEngine.ContentManagement
 
     private AssetInstance NewAssetInstance(string key, AssetType type, IAssetCore newcore)
     {
-      AssetInstance inst = new AssetInstance { core = newcore };
+      AssetInstance inst = new AssetInstance { Core = newcore };
       newcore.AllocationChanged += OnAssetAllocationChanged;
       _assets[(int) type].Add(key, inst);
       return inst;
@@ -472,9 +472,9 @@ namespace MediaPortal.UI.SkinEngine.ContentManagement
       int count = 0;
       Dictionary<string, AssetInstance>.Enumerator enumer = assets.GetEnumerator();
       while (enumer.MoveNext())
-        if (enumer.Current.Value.core.IsAllocated && (!checkIfCanBeDeleted || enumer.Current.Value.core.CanBeDeleted))
+        if (enumer.Current.Value.Core.IsAllocated && (!checkIfCanBeDeleted || enumer.Current.Value.Core.CanBeDeleted))
         {
-          enumer.Current.Value.core.Free();
+          enumer.Current.Value.Core.Free();
           ++count;
           if (count == limit)
             return count;
@@ -493,7 +493,7 @@ namespace MediaPortal.UI.SkinEngine.ContentManagement
         List<string> items = new List<string>();
         Dictionary<string, AssetInstance>.Enumerator enumer = assets.GetEnumerator();
         while (enumer.MoveNext())
-          if (!enumer.Current.Value.asset.IsAlive && !enumer.Current.Value.core.IsAllocated)
+          if (!enumer.Current.Value.Asset.IsAlive && !enumer.Current.Value.Core.IsAllocated)
             items.Add(enumer.Current.Key);
         foreach (string key in items)
           assets.Remove(key);
