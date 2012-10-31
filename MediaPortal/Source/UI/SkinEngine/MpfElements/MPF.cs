@@ -28,25 +28,37 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
-using MediaPortal.UI.Control.InputManager;
 using MediaPortal.Common.Commands;
 using MediaPortal.Common.Localization;
+using MediaPortal.UI.Control.InputManager;
 using MediaPortal.UI.SkinEngine.Commands;
+using MediaPortal.UI.SkinEngine.Controls.Animations;
 using MediaPortal.UI.SkinEngine.Controls.Brushes;
+using MediaPortal.UI.SkinEngine.Controls.ImageSources;
 using MediaPortal.UI.SkinEngine.Controls.Panels;
 using MediaPortal.UI.SkinEngine.Controls.Transforms;
 using MediaPortal.UI.SkinEngine.Controls.Visuals;
+using MediaPortal.UI.SkinEngine.Controls.Visuals.Effects;
+using MediaPortal.UI.SkinEngine.Controls.Visuals.Shapes;
 using MediaPortal.UI.SkinEngine.Controls.Visuals.Styles;
+using MediaPortal.UI.SkinEngine.Controls.Visuals.Templates;
+using MediaPortal.UI.SkinEngine.Controls.Visuals.Triggers;
+using MediaPortal.UI.SkinEngine.MarkupExtensions;
+using MediaPortal.UI.SkinEngine.MpfElements.Converters;
 using MediaPortal.UI.SkinEngine.MpfElements.Resources;
+using MediaPortal.UI.SkinEngine.ScreenManagement;
 using MediaPortal.UI.SkinEngine.Xaml.Interfaces;
 using MediaPortal.Utilities;
 using SlimDX;
+using Brush = MediaPortal.UI.SkinEngine.Controls.Brushes.Brush;
+using CommandList = MediaPortal.UI.SkinEngine.Commands.CommandList;
+using Image = MediaPortal.UI.SkinEngine.Controls.Visuals.Image;
+using Matrix = System.Drawing.Drawing2D.Matrix;
+using Rectangle = MediaPortal.UI.SkinEngine.Controls.Visuals.Shapes.Rectangle;
 using TypeConverter = MediaPortal.UI.SkinEngine.Xaml.TypeConverter;
-using MediaPortal.UI.SkinEngine.Controls.Visuals.Shapes;
-using Brush=MediaPortal.UI.SkinEngine.Controls.Brushes.Brush;
 
 namespace MediaPortal.UI.SkinEngine.MpfElements
-{                            
+{
   /// <summary>
   /// This class holds a registration for all elements which can be instantiated  by a XAML file. It also provides
   /// static methods for type conversions between special types and for copying instances.
@@ -63,163 +75,164 @@ namespace MediaPortal.UI.SkinEngine.MpfElements
     /// Registration for all elements the loader can create from a XAML file.
     /// </summary>
     protected static IDictionary<string, Type> _objectClassRegistrations = new Dictionary<string, Type>();
+
     static MPF()
-    {                    
+    {
       // Screen
-      _objectClassRegistrations.Add("Screen", typeof(SkinEngine.ScreenManagement.Screen));
-  
+      _objectClassRegistrations.Add("Screen", typeof(Screen));
+
       // Panels
-      _objectClassRegistrations.Add("DockPanel", typeof(SkinEngine.Controls.Panels.DockPanel));
-      _objectClassRegistrations.Add("StackPanel", typeof(SkinEngine.Controls.Panels.StackPanel));
-      _objectClassRegistrations.Add("VirtualizingStackPanel", typeof(SkinEngine.Controls.Panels.VirtualizingStackPanel));
-      _objectClassRegistrations.Add("Canvas", typeof(SkinEngine.Controls.Panels.Canvas));
-      _objectClassRegistrations.Add("Grid", typeof(SkinEngine.Controls.Panels.Grid));
-      _objectClassRegistrations.Add("RowDefinition", typeof(SkinEngine.Controls.Panels.RowDefinition));
-      _objectClassRegistrations.Add("ColumnDefinition", typeof(SkinEngine.Controls.Panels.ColumnDefinition));
-      _objectClassRegistrations.Add("GridLength", typeof(SkinEngine.Controls.Panels.GridLength));
-      _objectClassRegistrations.Add("WrapPanel", typeof(SkinEngine.Controls.Panels.WrapPanel));
-      _objectClassRegistrations.Add("UniformGrid", typeof(SkinEngine.Controls.Panels.UniformGrid));
+      _objectClassRegistrations.Add("DockPanel", typeof(DockPanel));
+      _objectClassRegistrations.Add("StackPanel", typeof(StackPanel));
+      _objectClassRegistrations.Add("VirtualizingStackPanel", typeof(VirtualizingStackPanel));
+      _objectClassRegistrations.Add("Canvas", typeof(Canvas));
+      _objectClassRegistrations.Add("Grid", typeof(Grid));
+      _objectClassRegistrations.Add("RowDefinition", typeof(RowDefinition));
+      _objectClassRegistrations.Add("ColumnDefinition", typeof(ColumnDefinition));
+      _objectClassRegistrations.Add("GridLength", typeof(GridLength));
+      _objectClassRegistrations.Add("WrapPanel", typeof(WrapPanel));
+      _objectClassRegistrations.Add("UniformGrid", typeof(UniformGrid));
 
       // Visuals
-      _objectClassRegistrations.Add("ARRetainingControl", typeof(SkinEngine.Controls.Visuals.ARRetainingControl));
-      _objectClassRegistrations.Add("BackgroundEffect", typeof(SkinEngine.Controls.Visuals.BackgroundEffect));
-      _objectClassRegistrations.Add("Control", typeof(SkinEngine.Controls.Visuals.Control));
-      _objectClassRegistrations.Add("ContentControl", typeof(SkinEngine.Controls.Visuals.ContentControl));
-      _objectClassRegistrations.Add("Border", typeof(SkinEngine.Controls.Visuals.Border));
-      _objectClassRegistrations.Add("GroupBox", typeof(SkinEngine.Controls.Visuals.GroupBox));
-      _objectClassRegistrations.Add("Image", typeof(SkinEngine.Controls.Visuals.Image));
-      _objectClassRegistrations.Add("Button", typeof(SkinEngine.Controls.Visuals.Button));
-      _objectClassRegistrations.Add("RadioButton", typeof(SkinEngine.Controls.Visuals.RadioButton));
-      _objectClassRegistrations.Add("CheckBox", typeof(SkinEngine.Controls.Visuals.CheckBox));
-      _objectClassRegistrations.Add("Label", typeof(SkinEngine.Controls.Visuals.Label));
-      _objectClassRegistrations.Add("ListView", typeof(SkinEngine.Controls.Visuals.ListView));
-      _objectClassRegistrations.Add("ListViewItem", typeof(SkinEngine.Controls.Visuals.ListViewItem));
-      _objectClassRegistrations.Add("ContentPresenter", typeof(SkinEngine.Controls.Visuals.ContentPresenter));
-      _objectClassRegistrations.Add("ScrollContentPresenter", typeof(SkinEngine.Controls.Visuals.ScrollContentPresenter));
-      _objectClassRegistrations.Add("ProgressBar", typeof(SkinEngine.Controls.Visuals.ProgressBar));
-      _objectClassRegistrations.Add("HeaderedItemsControl", typeof(SkinEngine.Controls.Visuals.HeaderedItemsControl));
-      _objectClassRegistrations.Add("TreeView", typeof(SkinEngine.Controls.Visuals.TreeView));
-      _objectClassRegistrations.Add("TreeViewItem", typeof(SkinEngine.Controls.Visuals.TreeViewItem));
-      _objectClassRegistrations.Add("ItemsPresenter", typeof(SkinEngine.Controls.Visuals.ItemsPresenter));
-      _objectClassRegistrations.Add("ScrollViewer", typeof(SkinEngine.Controls.Visuals.ScrollViewer));
-      _objectClassRegistrations.Add("TextBox", typeof(SkinEngine.Controls.Visuals.TextBox));
-      _objectClassRegistrations.Add("TextControl", typeof(SkinEngine.Controls.Visuals.TextControl));
-      _objectClassRegistrations.Add("KeyBinding", typeof(SkinEngine.Controls.Visuals.KeyBinding));
-      _objectClassRegistrations.Add("KeyBindingControl", typeof(SkinEngine.Controls.Visuals.KeyBindingControl));
-      _objectClassRegistrations.Add("VirtualKeyboardControl", typeof(SkinEngine.Controls.Visuals.VirtualKeyboardControl));
-      _objectClassRegistrations.Add("VirtualKeyboardPresenter", typeof(SkinEngine.Controls.Visuals.VirtualKeyboardPresenter));
-      _objectClassRegistrations.Add("Thickness", typeof(SkinEngine.Controls.Visuals.Thickness));
+      _objectClassRegistrations.Add("ARRetainingControl", typeof(ARRetainingControl));
+      _objectClassRegistrations.Add("BackgroundEffect", typeof(BackgroundEffect));
+      _objectClassRegistrations.Add("Control", typeof(Controls.Visuals.Control));
+      _objectClassRegistrations.Add("ContentControl", typeof(ContentControl));
+      _objectClassRegistrations.Add("Border", typeof(Border));
+      _objectClassRegistrations.Add("GroupBox", typeof(GroupBox));
+      _objectClassRegistrations.Add("Image", typeof(Image));
+      _objectClassRegistrations.Add("Button", typeof(Button));
+      _objectClassRegistrations.Add("RadioButton", typeof(RadioButton));
+      _objectClassRegistrations.Add("CheckBox", typeof(CheckBox));
+      _objectClassRegistrations.Add("Label", typeof(Label));
+      _objectClassRegistrations.Add("ListView", typeof(ListView));
+      _objectClassRegistrations.Add("ListViewItem", typeof(ListViewItem));
+      _objectClassRegistrations.Add("ContentPresenter", typeof(ContentPresenter));
+      _objectClassRegistrations.Add("ScrollContentPresenter", typeof(ScrollContentPresenter));
+      _objectClassRegistrations.Add("ProgressBar", typeof(ProgressBar));
+      _objectClassRegistrations.Add("HeaderedItemsControl", typeof(HeaderedItemsControl));
+      _objectClassRegistrations.Add("TreeView", typeof(TreeView));
+      _objectClassRegistrations.Add("TreeViewItem", typeof(TreeViewItem));
+      _objectClassRegistrations.Add("ItemsPresenter", typeof(ItemsPresenter));
+      _objectClassRegistrations.Add("ScrollViewer", typeof(ScrollViewer));
+      _objectClassRegistrations.Add("TextBox", typeof(TextBox));
+      _objectClassRegistrations.Add("TextControl", typeof(TextControl));
+      _objectClassRegistrations.Add("KeyBinding", typeof(KeyBinding));
+      _objectClassRegistrations.Add("KeyBindingControl", typeof(KeyBindingControl));
+      _objectClassRegistrations.Add("VirtualKeyboardControl", typeof(VirtualKeyboardControl));
+      _objectClassRegistrations.Add("VirtualKeyboardPresenter", typeof(VirtualKeyboardPresenter));
+      _objectClassRegistrations.Add("Thickness", typeof(Thickness));
 
       // Image Sources
-      _objectClassRegistrations.Add("BitmapImageSource", typeof(SkinEngine.Controls.ImageSources.BitmapImageSource));
-      _objectClassRegistrations.Add("MultiImageSource", typeof(SkinEngine.Controls.ImageSources.MultiImageSource));
-      _objectClassRegistrations.Add("ImagePlayerImageSource", typeof(SkinEngine.Controls.ImageSources.ImagePlayerImageSource));
+      _objectClassRegistrations.Add("BitmapImageSource", typeof(BitmapImageSource));
+      _objectClassRegistrations.Add("MultiImageSource", typeof(MultiImageSource));
+      _objectClassRegistrations.Add("ImagePlayerImageSource", typeof(ImagePlayerImageSource));
 
       // Brushes
-      _objectClassRegistrations.Add("SolidColorBrush", typeof(SkinEngine.Controls.Brushes.SolidColorBrush));
-      _objectClassRegistrations.Add("LinearGradientBrush", typeof(SkinEngine.Controls.Brushes.LinearGradientBrush));
-      _objectClassRegistrations.Add("RadialGradientBrush", typeof(SkinEngine.Controls.Brushes.RadialGradientBrush));
-      _objectClassRegistrations.Add("ImageBrush", typeof(SkinEngine.Controls.Brushes.ImageBrush));
-      _objectClassRegistrations.Add("VisualBrush", typeof(SkinEngine.Controls.Brushes.VisualBrush));
-      _objectClassRegistrations.Add("VideoBrush", typeof(SkinEngine.Controls.Brushes.VideoBrush));
-      _objectClassRegistrations.Add("GradientBrush", typeof(SkinEngine.Controls.Brushes.GradientBrush));
-      _objectClassRegistrations.Add("GradientStopCollection", typeof(SkinEngine.Controls.Brushes.GradientStopCollection));
-      _objectClassRegistrations.Add("GradientStop", typeof(SkinEngine.Controls.Brushes.GradientStop));
+      _objectClassRegistrations.Add("SolidColorBrush", typeof(SolidColorBrush));
+      _objectClassRegistrations.Add("LinearGradientBrush", typeof(LinearGradientBrush));
+      _objectClassRegistrations.Add("RadialGradientBrush", typeof(RadialGradientBrush));
+      _objectClassRegistrations.Add("ImageBrush", typeof(ImageBrush));
+      _objectClassRegistrations.Add("VisualBrush", typeof(VisualBrush));
+      _objectClassRegistrations.Add("VideoBrush", typeof(VideoBrush));
+      _objectClassRegistrations.Add("GradientBrush", typeof(GradientBrush));
+      _objectClassRegistrations.Add("GradientStopCollection", typeof(GradientStopCollection));
+      _objectClassRegistrations.Add("GradientStop", typeof(GradientStop));
 
       // Shapes
-      _objectClassRegistrations.Add("Rectangle", typeof(SkinEngine.Controls.Visuals.Shapes.Rectangle));
-      _objectClassRegistrations.Add("Ellipse", typeof(SkinEngine.Controls.Visuals.Shapes.Ellipse));
-      _objectClassRegistrations.Add("Line", typeof(SkinEngine.Controls.Visuals.Shapes.Line));
-      _objectClassRegistrations.Add("Polygon", typeof(SkinEngine.Controls.Visuals.Shapes.Polygon));
-      _objectClassRegistrations.Add("Path", typeof(SkinEngine.Controls.Visuals.Shapes.Path));
-      _objectClassRegistrations.Add("Shape", typeof(SkinEngine.Controls.Visuals.Shapes.Shape));
+      _objectClassRegistrations.Add("Rectangle", typeof(Rectangle));
+      _objectClassRegistrations.Add("Ellipse", typeof(Ellipse));
+      _objectClassRegistrations.Add("Line", typeof(Line));
+      _objectClassRegistrations.Add("Polygon", typeof(Polygon));
+      _objectClassRegistrations.Add("Path", typeof(Path));
+      _objectClassRegistrations.Add("Shape", typeof(Shape));
 
       // Animations
-      _objectClassRegistrations.Add("ColorAnimation", typeof(SkinEngine.Controls.Animations.ColorAnimation));
-      _objectClassRegistrations.Add("DoubleAnimation", typeof(SkinEngine.Controls.Animations.DoubleAnimation));
-      _objectClassRegistrations.Add("PointAnimation", typeof(SkinEngine.Controls.Animations.PointAnimation));
-      _objectClassRegistrations.Add("Storyboard", typeof(SkinEngine.Controls.Animations.Storyboard));
-      _objectClassRegistrations.Add("ColorAnimationUsingKeyFrames", typeof(SkinEngine.Controls.Animations.ColorAnimationUsingKeyFrames));
-      _objectClassRegistrations.Add("DoubleAnimationUsingKeyFrames", typeof(SkinEngine.Controls.Animations.DoubleAnimationUsingKeyFrames));
-      _objectClassRegistrations.Add("PointAnimationUsingKeyFrames", typeof(SkinEngine.Controls.Animations.PointAnimationUsingKeyFrames));
-      _objectClassRegistrations.Add("SplineColorKeyFrame", typeof(SkinEngine.Controls.Animations.SplineColorKeyFrame));
-      _objectClassRegistrations.Add("SplineDoubleKeyFrame", typeof(SkinEngine.Controls.Animations.SplineDoubleKeyFrame));
-      _objectClassRegistrations.Add("SplinePointKeyFrame", typeof(SkinEngine.Controls.Animations.SplinePointKeyFrame));
-      _objectClassRegistrations.Add("ObjectAnimationUsingKeyFrames", typeof(SkinEngine.Controls.Animations.ObjectAnimationUsingKeyFrames));
-      _objectClassRegistrations.Add("DiscreteObjectKeyFrame", typeof(SkinEngine.Controls.Animations.DiscreteObjectKeyFrame));
+      _objectClassRegistrations.Add("ColorAnimation", typeof(ColorAnimation));
+      _objectClassRegistrations.Add("DoubleAnimation", typeof(DoubleAnimation));
+      _objectClassRegistrations.Add("PointAnimation", typeof(PointAnimation));
+      _objectClassRegistrations.Add("Storyboard", typeof(Storyboard));
+      _objectClassRegistrations.Add("ColorAnimationUsingKeyFrames", typeof(ColorAnimationUsingKeyFrames));
+      _objectClassRegistrations.Add("DoubleAnimationUsingKeyFrames", typeof(DoubleAnimationUsingKeyFrames));
+      _objectClassRegistrations.Add("PointAnimationUsingKeyFrames", typeof(PointAnimationUsingKeyFrames));
+      _objectClassRegistrations.Add("SplineColorKeyFrame", typeof(SplineColorKeyFrame));
+      _objectClassRegistrations.Add("SplineDoubleKeyFrame", typeof(SplineDoubleKeyFrame));
+      _objectClassRegistrations.Add("SplinePointKeyFrame", typeof(SplinePointKeyFrame));
+      _objectClassRegistrations.Add("ObjectAnimationUsingKeyFrames", typeof(ObjectAnimationUsingKeyFrames));
+      _objectClassRegistrations.Add("DiscreteObjectKeyFrame", typeof(DiscreteObjectKeyFrame));
 
       // Triggers
-      _objectClassRegistrations.Add("EventTrigger", typeof(SkinEngine.Controls.Visuals.Triggers.EventTrigger));
-      _objectClassRegistrations.Add("Trigger", typeof(SkinEngine.Controls.Visuals.Triggers.Trigger));
-      _objectClassRegistrations.Add("DataTrigger", typeof(SkinEngine.Controls.Visuals.Triggers.DataTrigger));
-      _objectClassRegistrations.Add("BeginStoryboard", typeof(SkinEngine.Controls.Visuals.Triggers.BeginStoryboard));
-      _objectClassRegistrations.Add("StopStoryboard", typeof(SkinEngine.Controls.Visuals.Triggers.StopStoryboard));
-      _objectClassRegistrations.Add("TriggerCommand", typeof(SkinEngine.Controls.Visuals.Triggers.TriggerCommand));
-      _objectClassRegistrations.Add("SoundPlayerAction", typeof(SkinEngine.Controls.Visuals.Triggers.SoundPlayerAction));
+      _objectClassRegistrations.Add("EventTrigger", typeof(EventTrigger));
+      _objectClassRegistrations.Add("Trigger", typeof(Trigger));
+      _objectClassRegistrations.Add("DataTrigger", typeof(DataTrigger));
+      _objectClassRegistrations.Add("BeginStoryboard", typeof(BeginStoryboard));
+      _objectClassRegistrations.Add("StopStoryboard", typeof(StopStoryboard));
+      _objectClassRegistrations.Add("TriggerCommand", typeof(TriggerCommand));
+      _objectClassRegistrations.Add("SoundPlayerAction", typeof(SoundPlayerAction));
 
       // Transforms
-      _objectClassRegistrations.Add("TransformGroup", typeof(SkinEngine.Controls.Transforms.TransformGroup));
-      _objectClassRegistrations.Add("ScaleTransform", typeof(SkinEngine.Controls.Transforms.ScaleTransform));
-      _objectClassRegistrations.Add("SkewTransform", typeof(SkinEngine.Controls.Transforms.SkewTransform));
-      _objectClassRegistrations.Add("RotateTransform", typeof(SkinEngine.Controls.Transforms.RotateTransform));
-      _objectClassRegistrations.Add("TranslateTransform", typeof(SkinEngine.Controls.Transforms.TranslateTransform));
-      _objectClassRegistrations.Add("MatrixTransform", typeof(SkinEngine.Controls.Transforms.MatrixTransform));
+      _objectClassRegistrations.Add("TransformGroup", typeof(TransformGroup));
+      _objectClassRegistrations.Add("ScaleTransform", typeof(ScaleTransform));
+      _objectClassRegistrations.Add("SkewTransform", typeof(SkewTransform));
+      _objectClassRegistrations.Add("RotateTransform", typeof(RotateTransform));
+      _objectClassRegistrations.Add("TranslateTransform", typeof(TranslateTransform));
+      _objectClassRegistrations.Add("MatrixTransform", typeof(MatrixTransform));
 
       // Styles
-      _objectClassRegistrations.Add("Style", typeof(SkinEngine.Controls.Visuals.Styles.Style));
-      _objectClassRegistrations.Add("Setter", typeof(SkinEngine.Controls.Visuals.Styles.Setter));
-      _objectClassRegistrations.Add("BindingSetter", typeof(SkinEngine.Controls.Visuals.Styles.BindingSetter));
-      _objectClassRegistrations.Add("ControlTemplate", typeof(SkinEngine.Controls.Visuals.Templates.ControlTemplate));
-      _objectClassRegistrations.Add("ItemsPanelTemplate", typeof(SkinEngine.Controls.Visuals.Templates.ItemsPanelTemplate));
-      _objectClassRegistrations.Add("DataTemplate", typeof(SkinEngine.Controls.Visuals.Templates.DataTemplate));
-      _objectClassRegistrations.Add("DataStringProvider", typeof(SkinEngine.Controls.Visuals.Templates.DataStringProvider));
-      _objectClassRegistrations.Add("SubItemsProvider", typeof(SkinEngine.Controls.Visuals.Templates.SubItemsProvider));
+      _objectClassRegistrations.Add("Style", typeof(Style));
+      _objectClassRegistrations.Add("Setter", typeof(Setter));
+      _objectClassRegistrations.Add("BindingSetter", typeof(BindingSetter));
+      _objectClassRegistrations.Add("ControlTemplate", typeof(ControlTemplate));
+      _objectClassRegistrations.Add("ItemsPanelTemplate", typeof(ItemsPanelTemplate));
+      _objectClassRegistrations.Add("DataTemplate", typeof(DataTemplate));
+      _objectClassRegistrations.Add("DataStringProvider", typeof(DataStringProvider));
+      _objectClassRegistrations.Add("SubItemsProvider", typeof(SubItemsProvider));
 
       // Resources/wrapper classes
-      _objectClassRegistrations.Add("ResourceDictionary", typeof(SkinEngine.MpfElements.Resources.ResourceDictionary));
-      _objectClassRegistrations.Add("Include", typeof(SkinEngine.MpfElements.Resources.Include));
-      _objectClassRegistrations.Add("LateBoundValue", typeof(SkinEngine.MpfElements.Resources.LateBoundValue));
-      _objectClassRegistrations.Add("ResourceWrapper", typeof(SkinEngine.MpfElements.Resources.ResourceWrapper));
-      _objectClassRegistrations.Add("BindingWrapper", typeof(SkinEngine.MpfElements.Resources.BindingWrapper));
+      _objectClassRegistrations.Add("ResourceDictionary", typeof(ResourceDictionary));
+      _objectClassRegistrations.Add("Include", typeof(Include));
+      _objectClassRegistrations.Add("LateBoundValue", typeof(LateBoundValue));
+      _objectClassRegistrations.Add("ResourceWrapper", typeof(ResourceWrapper));
+      _objectClassRegistrations.Add("BindingWrapper", typeof(BindingWrapper));
 
       // Command
-      _objectClassRegistrations.Add("CommandList", typeof(SkinEngine.Commands.CommandList));
-      _objectClassRegistrations.Add("InvokeCommand", typeof(SkinEngine.Commands.InvokeCommand));
-      _objectClassRegistrations.Add("CommandBridge", typeof(SkinEngine.Commands.CommandBridge));
+      _objectClassRegistrations.Add("CommandList", typeof(CommandList));
+      _objectClassRegistrations.Add("InvokeCommand", typeof(InvokeCommand));
+      _objectClassRegistrations.Add("CommandBridge", typeof(CommandBridge));
 
       // Converters
-      _objectClassRegistrations.Add("ReferenceNotNull_BoolConverter", typeof(SkinEngine.MpfElements.Converters.ReferenceNotNull_BoolConverter));
-      _objectClassRegistrations.Add("EmptyString2FalseConverter", typeof(SkinEngine.MpfElements.Converters.EmptyString2FalseConverter));
-      _objectClassRegistrations.Add("ExpressionMultiValueConverter", typeof(SkinEngine.MpfElements.Converters.ExpressionMultiValueConverter));
-      _objectClassRegistrations.Add("ExpressionValueConverter", typeof(SkinEngine.MpfElements.Converters.ExpressionValueConverter));
-      _objectClassRegistrations.Add("CommaSeparatedValuesConverter", typeof(SkinEngine.MpfElements.Converters.CommaSeparatedValuesConverter));
-      _objectClassRegistrations.Add("DateFormatConverter", typeof(SkinEngine.MpfElements.Converters.DateFormatConverter));
+      _objectClassRegistrations.Add("ReferenceNotNull_BoolConverter", typeof(ReferenceNotNull_BoolConverter));
+      _objectClassRegistrations.Add("EmptyString2FalseConverter", typeof(EmptyString2FalseConverter));
+      _objectClassRegistrations.Add("ExpressionMultiValueConverter", typeof(ExpressionMultiValueConverter));
+      _objectClassRegistrations.Add("ExpressionValueConverter", typeof(ExpressionValueConverter));
+      _objectClassRegistrations.Add("CommaSeparatedValuesConverter", typeof(CommaSeparatedValuesConverter));
+      _objectClassRegistrations.Add("DateFormatConverter", typeof(DateFormatConverter));
 
       // Markup extensions
-      _objectClassRegistrations.Add("StaticResource", typeof(SkinEngine.MarkupExtensions.StaticResourceMarkupExtension));
-      _objectClassRegistrations.Add("DynamicResource", typeof(SkinEngine.MarkupExtensions.DynamicResourceMarkupExtension));
-      _objectClassRegistrations.Add("ThemeResource", typeof(SkinEngine.MarkupExtensions.ThemeResourceMarkupExtension));
-      _objectClassRegistrations.Add("Binding", typeof(SkinEngine.MarkupExtensions.BindingMarkupExtension));
-      _objectClassRegistrations.Add("MultiBinding", typeof(SkinEngine.MarkupExtensions.MultiBindingMarkupExtension));
-      _objectClassRegistrations.Add("TemplateBinding", typeof(SkinEngine.MarkupExtensions.TemplateBindingMarkupExtension));
-      _objectClassRegistrations.Add("PickupBinding", typeof(SkinEngine.MarkupExtensions.PickupBindingMarkupExtension));
-      _objectClassRegistrations.Add("Command", typeof(SkinEngine.MarkupExtensions.CommandMarkupExtension));
-      _objectClassRegistrations.Add("CommandStencil", typeof(SkinEngine.MarkupExtensions.CommandStencilMarkupExtension));
-      _objectClassRegistrations.Add("Model", typeof(SkinEngine.MarkupExtensions.GetModelMarkupExtension));
-      _objectClassRegistrations.Add("Service", typeof(SkinEngine.MarkupExtensions.ServiceRegistrationMarkupExtension));
-      _objectClassRegistrations.Add("Color", typeof(SkinEngine.MarkupExtensions.ColorMarkupExtension));
+      _objectClassRegistrations.Add("StaticResource", typeof(StaticResourceMarkupExtension));
+      _objectClassRegistrations.Add("DynamicResource", typeof(DynamicResourceMarkupExtension));
+      _objectClassRegistrations.Add("ThemeResource", typeof(ThemeResourceMarkupExtension));
+      _objectClassRegistrations.Add("Binding", typeof(BindingMarkupExtension));
+      _objectClassRegistrations.Add("MultiBinding", typeof(MultiBindingMarkupExtension));
+      _objectClassRegistrations.Add("TemplateBinding", typeof(TemplateBindingMarkupExtension));
+      _objectClassRegistrations.Add("PickupBinding", typeof(PickupBindingMarkupExtension));
+      _objectClassRegistrations.Add("Command", typeof(CommandMarkupExtension));
+      _objectClassRegistrations.Add("CommandStencil", typeof(CommandStencilMarkupExtension));
+      _objectClassRegistrations.Add("Model", typeof(GetModelMarkupExtension));
+      _objectClassRegistrations.Add("Service", typeof(ServiceRegistrationMarkupExtension));
+      _objectClassRegistrations.Add("Color", typeof(ColorMarkupExtension));
 
       // Others
-      _objectClassRegistrations.Add("RelativeSource", typeof(SkinEngine.MarkupExtensions.RelativeSource));
+      _objectClassRegistrations.Add("RelativeSource", typeof(RelativeSource));
 
       // Effects
       // Image effects based on ImageContext
-      _objectClassRegistrations.Add("SimpleImageEffect", typeof(MediaPortal.UI.SkinEngine.Controls.Visuals.Effects.SimpleImageEffect));
-      _objectClassRegistrations.Add("ZoomBlurEffect", typeof(MediaPortal.UI.SkinEngine.Controls.Visuals.Effects.ZoomBlurEffect));
-      _objectClassRegistrations.Add("PixelateEffect", typeof(MediaPortal.UI.SkinEngine.Controls.Visuals.Effects.PixelateEffect));
+      _objectClassRegistrations.Add("SimpleImageEffect", typeof(SimpleImageEffect));
+      _objectClassRegistrations.Add("ZoomBlurEffect", typeof(ZoomBlurEffect));
+      _objectClassRegistrations.Add("PixelateEffect", typeof(PixelateEffect));
 
       // Generic shader effects based on EffectContext
-      _objectClassRegistrations.Add("SimpleShaderEffect", typeof(MediaPortal.UI.SkinEngine.Controls.Visuals.Effects.SimpleShaderEffect));
+      _objectClassRegistrations.Add("SimpleShaderEffect", typeof(SimpleShaderEffect));
     }
 
     #endregion
@@ -227,12 +240,13 @@ namespace MediaPortal.UI.SkinEngine.MpfElements
     #region Public properties
 
     public static IDictionary<string, Type> ObjectClassRegistrations
-    { get { return _objectClassRegistrations; } }
+    {
+      get { return _objectClassRegistrations; }
+    }
 
     #endregion
 
     #region Public methods
-
 
     public static bool ConvertType(object value, Type targetType, out object result)
     {
@@ -280,7 +294,7 @@ namespace MediaPortal.UI.SkinEngine.MpfElements
       if (targetType == typeof(Transform))
       {
         string v = value.ToString();
-        string[] parts = v.Split(new char[] { ',' });
+        string[] parts = v.Split(new[] { ',' });
         if (parts.Length == 6)
         {
           float[] f = new float[parts.Length];
@@ -290,7 +304,8 @@ namespace MediaPortal.UI.SkinEngine.MpfElements
             TypeConverter.Convert(parts[i], typeof(double), out obj);
             f[i] = (float) obj;
           }
-          System.Drawing.Drawing2D.Matrix matrix2d = new System.Drawing.Drawing2D.Matrix(f[0], f[1], f[2], f[3], f[4], f[5]);
+          Matrix matrix2d = new Matrix(f[0], f[1], f[2], f[3], f[4],
+            f[5]);
           Static2dMatrix matrix = new Static2dMatrix();
           matrix.Set2DMatrix(matrix2d);
           result = matrix;
@@ -340,11 +355,13 @@ namespace MediaPortal.UI.SkinEngine.MpfElements
       {
         try
         {
-          Color color = value is Color ? (Color) value : (Color)
+          Color color = value is Color
+            ? (Color) value
+            : (Color)
               TypeDescriptor.GetConverter(typeof(Color)).ConvertFromString(value.ToString());
           SolidColorBrush b = new SolidColorBrush
             {
-                Color = color
+              Color = color
             };
           result = b;
           return true;
@@ -358,7 +375,7 @@ namespace MediaPortal.UI.SkinEngine.MpfElements
       {
         PointCollection coll = new PointCollection();
         string text = value.ToString();
-        string[] parts = text.Split(new char[] { ',', ' ' });
+        string[] parts = text.Split(new[] { ',', ' ' });
         for (int i = 0; i < parts.Length; i += 2)
         {
           Point p = new Point(Int32.Parse(parts[i]), Int32.Parse(parts[i + 1]));
@@ -434,21 +451,21 @@ namespace MediaPortal.UI.SkinEngine.MpfElements
       if (t == typeof(Vector2))
       {
         Vector2 vec = (Vector2) source;
-        Vector2 result = new Vector2 {X = vec.X, Y = vec.Y};
+        Vector2 result = new Vector2 { X = vec.X, Y = vec.Y };
         target = result;
         return true;
       }
       if (t == typeof(Vector3))
       {
         Vector3 vec = (Vector3) source;
-        Vector3 result = new Vector3 {X = vec.X, Y = vec.Y, Z = vec.Z};
+        Vector3 result = new Vector3 { X = vec.X, Y = vec.Y, Z = vec.Z };
         target = result;
         return true;
       }
       if (t == typeof(Vector4))
       {
         Vector4 vec = (Vector4) source;
-        Vector4 result = new Vector4 {X = vec.X, Y = vec.Y, W = vec.W, Z = vec.Z};
+        Vector4 result = new Vector4 { X = vec.X, Y = vec.Y, W = vec.W, Z = vec.Z };
         target = result;
         return true;
       }
@@ -556,7 +573,7 @@ namespace MediaPortal.UI.SkinEngine.MpfElements
         return new Vector2(0, 0);
       }
       Vector2 vec = new Vector2();
-      string[] coords = coordsString.Split(new char[] { ',' });
+      string[] coords = coordsString.Split(new[] { ',' });
       object obj;
       if (coords.Length > 0)
       {
@@ -588,7 +605,7 @@ namespace MediaPortal.UI.SkinEngine.MpfElements
         return new Vector3(0, 0, 0);
       }
       Vector3 vec = new Vector3();
-      string[] coords = coordsString.Split(new char[] { ',' });
+      string[] coords = coordsString.Split(new[] { ',' });
       object obj;
       if (coords.Length > 0)
       {
@@ -627,7 +644,7 @@ namespace MediaPortal.UI.SkinEngine.MpfElements
         return new Vector4(0, 0, 0, 0);
       }
       Vector4 vec = new Vector4();
-      string[] coords = coordsString.Split(new char[] { ',' });
+      string[] coords = coordsString.Split(new[] { ',' });
       object obj;
       if (coords.Length > 0)
       {
@@ -661,7 +678,7 @@ namespace MediaPortal.UI.SkinEngine.MpfElements
     /// is empty or if </exception>
     protected static float[] ParseFloatList(string numbersString)
     {
-      string[] numbers = numbersString.Split(new char[] { ',' });
+      string[] numbers = numbersString.Split(new[] { ',' });
       if (numbers.Length == 0)
         throw new ArgumentException("Empty list");
       float[] result = new float[numbers.Length];
