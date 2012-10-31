@@ -304,11 +304,11 @@ namespace MediaPortal.UI.SkinEngine.SpecialElements.Controls
       {
         if (_messageQueue != null)
           return;
-        _messageQueue = new AsynchronousMessageQueue(this, new string[]
+        _messageQueue = new AsynchronousMessageQueue(this, new[]
           {
              PlayerManagerMessaging.CHANNEL,
              PlayerContextManagerMessaging.CHANNEL,
-             SystemMessaging.CHANNEL,
+             SystemMessaging.CHANNEL
           });
         _messageQueue.MessageReceived += OnMessageReceived;
         messageQueue = _messageQueue;
