@@ -220,7 +220,7 @@ namespace UPnP.Infrastructure.CP
         try
         {
           response = (HttpWebResponse) state.Request.EndGetResponse(ar);
-          body = response.GetResponseStream();
+          body = CompressionHelper.Decompress(response);
           string mediaType;
           if (!EncodingUtils.TryParseContentTypeEncoding(response.ContentType, Encoding.UTF8, out mediaType, out contentEncoding) ||
               mediaType != "text/xml")
@@ -298,6 +298,7 @@ namespace UPnP.Infrastructure.CP
       request.UserAgent = UPnPConfiguration.UPnPMachineInfoHeader;
       request.ContentType = "text/xml; charset=\"utf-8\"";
       request.Headers.Add("SOAPACTION", action.Action_URN);
+      request.Headers.Add("Accept-Encoding", CompressionHelper.PREFERRED_COMPRESSION);
       return request;
     }
 
