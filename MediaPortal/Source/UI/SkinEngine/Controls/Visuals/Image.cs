@@ -60,7 +60,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.Visuals
   }
 
   // TODO: Thumbnail property & handling is not implemented for all image sources. Makes it sense to have this property in the Image class? Should it be reworked?
-  public class Image : Control
+  public class Image : FrameworkElement
   {
     #region Classes
 
@@ -299,29 +299,6 @@ namespace MediaPortal.UI.SkinEngine.Controls.Visuals
       get { return _hasImageProperty; }
     }
 
-    protected override SizeF CalculateInnerDesiredSize(SizeF totalSize)
-    {
-      ImageSourceState allocatedSource = GetLoadedSource(false);
-      if (allocatedSource == null)
-      {
-        _lastImageSourceSize = SizeF.Empty;
-        return new SizeF(10, 10);
-      }
-
-      SizeF imageSize = allocatedSource.ImageSource.SourceSize;
-      float sourceFrameRatio = imageSize.Width / imageSize.Height;
-      // Adaptions when available size is not specified in any direction(s)
-      if (double.IsNaN(totalSize.Width) && double.IsNaN(totalSize.Height))
-        totalSize = imageSize;
-      else if (double.IsNaN(totalSize.Height))
-        totalSize.Height = totalSize.Width / sourceFrameRatio;
-      else if (double.IsNaN(totalSize.Width))
-        totalSize.Width = totalSize.Height * sourceFrameRatio;
-
-      _lastImageSourceSize = imageSize;
-      return allocatedSource.ImageSource.StretchSource(totalSize, imageSize, Stretch, StretchDirection);
-    }
-
     protected ImageSourceState GetLoadedSource(bool invalidateLayout)
     {
       if (_loadImageSource)
@@ -455,11 +432,41 @@ namespace MediaPortal.UI.SkinEngine.Controls.Visuals
       return null;
     }
 
-    public override void DoRender(RenderContext localRenderContext)
+    protected override SizeF CalculateInnerDesiredSize(SizeF totalSize)
+    {
+      ImageSourceState allocatedSource = GetLoadedSource(false);
+      if (allocatedSource == null)
+      {
+        _lastImageSourceSize = SizeF.Empty;
+        return new SizeF(10, 10);
+      }
+
+      SizeF imageSize = allocatedSource.ImageSource.SourceSize;
+      float sourceFrameRatio = imageSize.Width / imageSize.Height;
+      // Adaptions when available size is not specified in any direction(s)
+      if (double.IsNaN(totalSize.Width) && double.IsNaN(totalSize.Height))
+        totalSize = imageSize;
+      else if (double.IsNaN(totalSize.Height))
+        totalSize.Height = totalSize.Width / sourceFrameRatio;
+      else if (double.IsNaN(totalSize.Width))
+        totalSize.Width = totalSize.Height * sourceFrameRatio;
+
+      _lastImageSourceSize = imageSize;
+      return allocatedSource.ImageSource.StretchSource(totalSize, imageSize, Stretch, StretchDirection);
+    }
+
+    protected override void ArrangeOverride()
+    {
+      base.ArrangeOverride();
+      _sourceState.Setup = false;
+      _fallbackSourceState.Setup = false;
+    }
+
+    public override void RenderOverride(RenderContext localRenderContext)
     {
       ImageSourceState allocatedSource = GetLoadedSource(true);
       if (allocatedSource == null)
-        base.DoRender(localRenderContext);
+        base.RenderOverride(localRenderContext);
       else
       {
         // Update source geometry if necessary (source has changed, layout has changed).
@@ -468,16 +475,9 @@ namespace MediaPortal.UI.SkinEngine.Controls.Visuals
           allocatedSource.ImageSource.Setup(_innerRect, localRenderContext.ZOrder, SkinNeutralAR);
           allocatedSource.Setup = true;
         }
-        base.DoRender(localRenderContext);
+        base.RenderOverride(localRenderContext);
         allocatedSource.ImageSource.Render(localRenderContext, Stretch, StretchDirection);
       }
-    }
-
-    protected override void ArrangeOverride()
-    {
-      base.ArrangeOverride();
-      _sourceState.Setup = false;
-      _fallbackSourceState.Setup = false;
     }
 
     public override void Allocate()

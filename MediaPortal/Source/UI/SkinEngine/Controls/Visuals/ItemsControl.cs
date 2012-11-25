@@ -33,6 +33,7 @@ using MediaPortal.UI.SkinEngine.Controls.Panels;
 using MediaPortal.UI.SkinEngine.Controls.Visuals.Templates;
 using MediaPortal.UI.SkinEngine.MpfElements;
 using MediaPortal.UI.SkinEngine.ScreenManagement;
+using MediaPortal.UI.SkinEngine.Xaml;
 using MediaPortal.UI.SkinEngine.Xaml.Interfaces;
 using MediaPortal.Utilities;
 using MediaPortal.Utilities.DeepCopy;
@@ -495,7 +496,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.Visuals
 
     protected void PrepareItems(bool force)
     {
-      if (_elementState != ElementState.Running && _elementState != ElementState.Preparing)
+      if (!PreparingOrRunning)
         return;
       if (_preventItemsPreparation)
         return;
@@ -534,6 +535,11 @@ namespace MediaPortal.UI.SkinEngine.Controls.Visuals
       if (_itemsHostPanel == null)
         return;
 
+      // Albert: We cannot exit the method if one of the styles is not set because the styles
+      // might be found by the SkinEngine's automatic Style assignment (FrameworkElement.CopyDefaultStyle)
+      //if (ItemContainerStyle == null || ItemTemplate == null)
+      //  return;
+
       IEnumerable itemsSource = ItemsSource;
       if (itemsSource == null)
       { // In this case, we must set up the items control using the Items property
@@ -550,7 +556,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.Visuals
         {
           object itemCopy = MpfCopyManager.DeepCopyWithFixedObject(item, this); // Keep this object as LogicalParent
           FrameworkElement element = itemCopy as FrameworkElement ?? PrepareItemContainer(itemCopy);
-          if (element.Style == null)
+          if (element.Style == null && element is ContentControl)
             element.Style = ItemContainerStyle;
           element.LogicalParent = this;
           preparedChildren.Add(element);
@@ -577,7 +583,9 @@ namespace MediaPortal.UI.SkinEngine.Controls.Visuals
           // In this case, the VSP will generate its items by itself
           ListViewItemGenerator lvig = new ListViewItemGenerator();
           lvig.Initialize(this, l, ItemContainerStyle, ItemTemplate);
-          IsEmpty = l.Count == 0;
+          SimplePropertyDataDescriptor dd;
+          if (SimplePropertyDataDescriptor.CreateSimplePropertyDataDescriptor(this, "IsEmpty", out dd))
+            SetValueInRenderThread(dd, l.Count == 0);
           vsp.SetItemProvider(lvig);
 
           SetPreparedItems(true, null, false, null);
@@ -683,8 +691,9 @@ namespace MediaPortal.UI.SkinEngine.Controls.Visuals
         }
       }
       VirtualizingStackPanel vsp = itemsHostPanel as VirtualizingStackPanel;
-      IItemProvider itemProvider = vsp == null ? null : vsp.ItemProvider;
-      IsEmpty = (itemProvider == null ? itemsHostPanel.Children.Count : itemProvider.NumItems) == 0;
+      if (vsp == null)
+        IsEmpty = itemsHostPanel.Children.Count == 0;
+      // else IsEmpty has been updated by PrepareItemsOverride
     }
 
     /// <summary>

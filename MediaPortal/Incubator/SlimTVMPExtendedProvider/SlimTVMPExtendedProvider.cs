@@ -378,7 +378,7 @@ namespace MediaPortal.Plugins.SlimTv.Providers
         IList<WebChannelBasic> tvChannels = TvServer(indexGroup.ServerIndex).GetChannelsBasic(group.ChannelGroupId);
         foreach (WebChannelBasic webChannel in tvChannels)
         {
-          channels.Add(new Channel { ChannelId = webChannel.Id, Name = webChannel.DisplayName, ServerIndex = indexGroup.ServerIndex });
+          channels.Add(new Channel { ChannelId = webChannel.Id, Name = webChannel.Title, ServerIndex = indexGroup.ServerIndex });
         }
         return true;
       }
@@ -404,7 +404,7 @@ namespace MediaPortal.Plugins.SlimTv.Providers
         WebChannelBasic tvChannel = TvServer(indexProgram.ServerIndex).GetChannelBasicById(indexProgram.ChannelId);
         if (tvChannel != null)
         {
-          channel = new Channel { ChannelId = tvChannel.Id, Name = tvChannel.DisplayName, ServerIndex = indexProgram.ServerIndex };
+          channel = new Channel { ChannelId = tvChannel.Id, Name = tvChannel.Title, ServerIndex = indexProgram.ServerIndex };
           return true;
         }
       }
@@ -546,17 +546,15 @@ namespace MediaPortal.Plugins.SlimTv.Providers
       if (!CheckConnection(indexProgram.ServerIndex))
         return false;
 
-      WebResult result;
       try
       {
-        result = TvServer(indexProgram.ServerIndex).AddSchedule(program.ChannelId, program.Title, program.StartTime,
+        return TvServer(indexProgram.ServerIndex).AddSchedule(program.ChannelId, program.Title, program.StartTime,
                                                        program.EndTime, WebScheduleType.Once);
       }
       catch
       {
         return false;
       }
-      return result.Result;
     }
 
     public bool RemoveSchedule(IProgram program)
@@ -568,16 +566,14 @@ namespace MediaPortal.Plugins.SlimTv.Providers
       if (!CheckConnection(indexProgram.ServerIndex))
         return false;
 
-      WebResult result;
       try
       {
-        result = TvServer(indexProgram.ServerIndex).CancelSchedule(program.ProgramId);
+        return TvServer(indexProgram.ServerIndex).CancelSchedule(program.ProgramId);
       }
       catch
       {
         return false;
       }
-      return result.Result;
     }
     
     public bool GetRecordingStatus(IProgram program, out RecordingStatus recordingStatus)

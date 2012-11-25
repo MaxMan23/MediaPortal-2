@@ -249,6 +249,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.Visuals
 
     protected override SizeF CalculateInnerDesiredSize(SizeF totalSize)
     {
+      base.CalculateInnerDesiredSize(totalSize); // Needs to be called in each sub class of Control, see comment in Control.CalculateInnerDesiredSize()
       AllocFont();
 
       // Measure the text
@@ -269,9 +270,9 @@ namespace MediaPortal.UI.SkinEngine.Controls.Visuals
       return size;
     }
 
-    public override void DoRender(RenderContext localRenderContext)
+    public override void RenderOverride(RenderContext localRenderContext)
     {
-      base.DoRender(localRenderContext);
+      base.RenderOverride(localRenderContext);
 
       AllocFont();
 

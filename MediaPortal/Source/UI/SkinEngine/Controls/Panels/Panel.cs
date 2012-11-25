@@ -142,8 +142,8 @@ namespace MediaPortal.UI.SkinEngine.Controls.Panels
 
     void OnChildrenChanged(FrameworkElementCollection coll)
     {
-      InvalidateLayout(true, true);
       _updateRenderOrder = true;
+      InvalidateLayout(true, true);
     }
 
     protected void OnBackgroundPropertyChanged(AbstractProperty property, object oldValue)
@@ -272,7 +272,7 @@ namespace MediaPortal.UI.SkinEngine.Controls.Panels
         element.Render(localRenderContext);
     }
 
-    public override void DoRender(RenderContext localRenderContext)
+    public override void RenderOverride(RenderContext localRenderContext)
     {
       UpdateRenderOrder();
 

@@ -112,9 +112,14 @@ namespace MediaPortal.UI.SkinEngine.DirectX
       get { return _currentGraphicsConfiguration; }
     }
 
+    public bool IsMultiSample
+    {
+      get { return _presentParams.Multisample != MultisampleType.None; }
+    }
+
     public Present Present
     {
-      get { return _presentParams.Multisample == MultisampleType.None ? Present.ForceImmediate : Present.None; }
+      get { return IsMultiSample ? Present.None : Present.ForceImmediate; }
     }
 
     /// <summary>
@@ -215,7 +220,7 @@ namespace MediaPortal.UI.SkinEngine.DirectX
           configuration.AdapterInfo.AdapterOrdinal,
           configuration.DeviceInfo.DevType,
           _renderTarget.Handle,
-          createFlags | CreateFlags.Multithreaded,
+          createFlags | CreateFlags.Multithreaded | CreateFlags.EnablePresentStatistics,
           _presentParams);
 
       // When moving from fullscreen to windowed mode, it is important to

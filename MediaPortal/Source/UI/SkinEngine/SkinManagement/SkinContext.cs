@@ -28,10 +28,11 @@ using System.Threading;
 using System.Windows.Forms;
 using MediaPortal.Common.General;
 using MediaPortal.UI.SkinEngine.DirectX;
+using MediaPortal.UI.SkinEngine.DirectX.RenderStrategy;
 using SlimDX.Direct3D9;
 
 namespace MediaPortal.UI.SkinEngine.SkinManagement
-{                         
+{
   public delegate void SkinResourcesChangedHandler(SkinResources newResources);
 
   /// <summary>
@@ -106,6 +107,86 @@ namespace MediaPortal.UI.SkinEngine.SkinManagement
     public static Direct3DEx Direct3D
     {
       get { return MPDirect3D.Direct3D; }
+    }
+
+    /// <summary>
+    /// Gets the current RenderStrategy (affects frame sync and present mode).
+    /// </summary>
+    public static IRenderStrategy RenderStrategy
+    {
+      get { return GraphicsDevice.RenderStrategy; }
+    }
+
+    /// <summary>
+    /// Toggles between different RenderStrategies (affects frame sync and present mode).
+    /// </summary>
+    public static void NextRenderStrategy()
+    {
+      GraphicsDevice.NextRenderStrategy();
+    }
+
+    /// <summary>
+    /// Indicates if device is using multi sample antialiasing (MSAA).
+    /// </summary>
+    public static bool IsMultiSample
+    {
+      get { return GraphicsDevice.Setup.IsMultiSample; }
+    }
+
+    /// <summary>
+    /// Exposes an event of the rendering process. It gets fired immediately after DeviceEx.BeginScene.
+    /// </summary>
+    public static event EventHandler DeviceSceneBegin
+    {
+      add { GraphicsDevice.DeviceSceneBegin += value; }
+      remove { GraphicsDevice.DeviceSceneBegin -= value; }
+    }
+
+    /// <summary>
+    /// Exposes an event of the rendering process. It gets fired immediately before DeviceEx.EndScene.
+    /// </summary>
+    public static event EventHandler DeviceSceneEnd
+    {
+      add { GraphicsDevice.DeviceSceneEnd += value; }
+      remove { GraphicsDevice.DeviceSceneEnd -= value; }
+    }
+
+    /// <summary>
+    /// Exposes an event of the rendering process. It gets fired immediately after DeviceEx.PresentEx.
+    /// </summary>
+    public static event EventHandler DeviceScenePresented
+    {
+      add { GraphicsDevice.DeviceScenePresented += value; }
+      remove { GraphicsDevice.DeviceScenePresented -= value; }
+    }
+
+    /// <summary>
+    /// Gets the back-buffer width of the DeviceEx.
+    /// </summary>
+    public static int BackBufferWidth
+    {
+      get { return GraphicsDevice.Width; }
+    }
+
+    /// <summary>
+    /// Gets the back-buffer height of the DeviceEx.
+    /// </summary>
+    public static int BackBufferHeight
+    {
+      get { return GraphicsDevice.Height; }
+    }
+
+    /// <summary>
+    /// Returns the current display mode used in the SkinEngine.
+    /// </summary>
+    public static DisplayMode CurrentDisplayMode
+    {
+      get
+      {
+        int ordinal = GraphicsDevice.Device.Capabilities.AdapterOrdinal;
+        AdapterInformation adapterInfo = MPDirect3D.Direct3D.Adapters[ordinal];
+        return adapterInfo.CurrentDisplayMode;
+      }
     }
 
     /// <summary>
