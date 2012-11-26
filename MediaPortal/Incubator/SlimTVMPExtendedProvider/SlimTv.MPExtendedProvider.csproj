@@ -55,6 +55,10 @@
     <Reference Include="MPExtended.Services.Common.Interfaces">
       <HintPath>References\MPExtended.Services.Common.Interfaces.dll</HintPath>
     </Reference>
+    <Reference Include="MPExtended.Services.TVAccessService.Interfaces, Version=0.5.0.0, Culture=neutral, PublicKeyToken=8ccaf7b9f3e31d46, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\MPExtended.Services.TVAccessService.Interfaces.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -102,6 +106,7 @@
   <ItemGroup>
     <Content Include="Language\strings_en.xml" />
     <Content Include="plugin.xml" />
+    <Content Include="References\MPExtended.Services.Common.Interfaces.dll" />
     <Content Include="References\MPExtended.Services.TVAccessService.Interfaces.dll" />
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +136,7 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>xcopy /Y "$(ProjectDir)plugin.xml" "$(SolutionDir)..\Bin\$(SolutionName)\$(OutDir)Plugins\$(ProjectName)\"
+xcopy /Y "$(ProjectDir)\References\MPExtended.Services.Common.Interfaces.dll" "$(SolutionDir)..\Bin\$(SolutionName)\$(OutDir)Plugins\$(ProjectName)\"
 xcopy /Y "$(ProjectDir)\References\MPExtended.Services.TVAccessService.Interfaces.dll" "$(SolutionDir)..\Bin\$(SolutionName)\$(OutDir)Plugins\$(ProjectName)\"
 mkdir "$(SolutionDir)..\Bin\$(SolutionName)\$(OutDir)Plugins\$(ProjectName)\Language"
 robocopy "$(ProjectDir)Language" "$(SolutionDir)..\Bin\$(SolutionName)\$(OutDir)Plugins\$(ProjectName)\Language" /MIR /NP
